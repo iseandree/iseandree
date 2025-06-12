@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Counter : MonoBehaviour
 {
-    public TextMeshProUGUI CounterText;
+    public Text CounterText;
 
     private int Count = 0;
 
@@ -19,6 +18,6 @@ public class Counter : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Count += 1;
-        CounterText.text = "Score: " + Count;
+        CounterText.text = "Count : " + Count;
     }
 }
