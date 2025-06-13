@@ -30,20 +30,23 @@ public class BallThrower : MonoBehaviour
         EventManager.OnRelease -= HandleRelease; // Unsubscribe from the event to prevent memory leaks
     }
 
-    private void HandleRelease(Vector2 start, Vector2 end, float duration)
+    private void HandleRelease(Vector2 startPosition, Vector2 endPosition, float duration)
     {
-        float distance = Vector2.Distance(start, end); // Calculate the distance of the swipe
+        float distance = Vector2.Distance(startPosition, endPosition); // Calculate the distance of the swipe
         if (distance < 0.1f) return; // If the distance is too small, do not throw the ball
 
         float speed = Mathf.Clamp(distance / duration, 0f, maxBallSpeed); // Calculate the speed based on distance and duration 
-        Vector3 startWorld = mainCamera.ScreenToWorldPoint(new Vector3(start.x, start.y, screenZ)); // Convert the start position to world coordinates
-        Vector3 endWorld = mainCamera.ScreenToWorldPoint(new Vector3(end.x, end.y, screenZ)); // Convert the end position to world coordinates
-        Vector3 throwDirection = (endWorld - startWorld).normalized; // Calculate the direction of the throw using the start and end positions
+        //Vector3 startWorld = mainCamera.ScreenToWorldPoint(new Vector3(start.x, start.y, screenZ)); // Convert the start position to world coordinates
+        //Vector3 endWorld = mainCamera.ScreenToWorldPoint(new Vector3(end.x, end.y, screenZ)); // Convert the end position to world coordinates
+        //Vector3 throwDirection = (endWorld - startWorld).normalized; // Calculate the direction of the throw using the start and end positions
+        
+        Ray ray = mainCamera.ScreenPointToRay(endPosition); // Create a ray from the camera to the start position
+        Vector3 throwDirection = ray.direction.normalized; // Calculate the throw direction using the ray direction
         basketballRigidbody.isKinematic = false;
         basketballRigidbody.useGravity = true;
         basketballRigidbody.linearVelocity = Vector3.zero;
         basketballRigidbody.AddForce(throwDirection * speed, ForceMode.VelocityChange); // Apply the force to the Rigidbody to throw the ball
         EventManager.OnBallThrown?.Invoke(); // Trigger the ball thrown event
-        Debug.Log($"Ball thrown from {startWorld} to {endWorld} with speed {speed} at time {Time.time}");
+        //Debug.Log($"Ball thrown from {startWorld} to {endWorld} with speed {speed} at time {Time.time}");
     }
 }
