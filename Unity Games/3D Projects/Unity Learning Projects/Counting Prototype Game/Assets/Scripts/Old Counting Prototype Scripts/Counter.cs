@@ -5,6 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Counter is responsible for counting the number of times a player enters a trigger collider. It updates a UI TextMeshProUGUI element to display the count.
+/// </summary>
 public class Counter : MonoBehaviour
 {
     public TextMeshProUGUI CounterText;
@@ -12,7 +15,6 @@ public class Counter : MonoBehaviour
 
     private void Start()
     {
-        Count = 0;
         CounterText.text = "Count : " + Count;
     }
 
