@@ -8,6 +8,8 @@ public class PerfectReleaseController : MonoBehaviour
     private float holdTime;
     private float holdStartTime;
     private bool isHolding = false;
+    public float normalized;
+    public bool isPerfect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,13 +30,23 @@ public class PerfectReleaseController : MonoBehaviour
         }
         else if (Input.GetButtonUp("Fire1") && isHolding)   // If the player releases the fire button and is currently holding the ball, calculate the hold time
         {
+            // Calculate the hold time and determine if it falls within the perfect release zone
             holdTime = Time.time - holdStartTime;
             holdTime = Mathf.Clamp(holdTime, 0f, maxHoldTime);
-            float normalized = holdTime / maxHoldTime;
-            bool isPerfect = (normalized >= perfectReleaseZone.x && normalized <= perfectReleaseZone.y);
+            normalized = holdTime / maxHoldTime;  // Normalize the hold time to a value between 0 and 1
+            isPerfect = (normalized >= perfectReleaseZone.x && normalized <= perfectReleaseZone.y);
             EventManager.OnBallPerfectRelease?.Invoke(holdTime, isPerfect);
             isHolding = false;
             Debug.Log($"Released the ball after {holdTime} seconds. Perfect Release: {isPerfect}");
         }
+    }
+
+    public float GetNormalizedHoldTime()
+    {
+        if (!isHolding)
+        {
+            return 0f; // Return 0 if not holding the ball
+        }
+        return Mathf.Clamp01((Time.time - holdStartTime) / maxHoldTime); ; // Return the normalized hold time
     }
 }
