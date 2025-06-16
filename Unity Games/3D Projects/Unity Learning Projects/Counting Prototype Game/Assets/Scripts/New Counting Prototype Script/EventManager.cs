@@ -11,10 +11,12 @@ public class EventManager : MonoBehaviour
     public static Action<Vector2, Vector2, float> OnRelease;
     public static Action<Vector2, Vector2, float> OnThrow;
     public static Action OnBallThrown;
+    public static Action<float, bool> OnBallPerfectRelease;
 
     // Ball-Related Methods
     public static void PickUpBall(Vector2 position, float time) => OnPickUp?.Invoke(position, time);   
     public static void DropBall(Vector2 position, Vector2 dropPosition, float time) => OnRelease?.Invoke(position, dropPosition, time);
     public static void ThrowBall(Vector2 start, Vector2 end, float time) => OnThrow?.Invoke(start, end, time);
     public static void BallThrown() => OnBallThrown?.Invoke();
+    public static void BallPerfectRelease(float holdTime, bool isPerfect) => OnBallPerfectRelease?.Invoke(holdTime, isPerfect);
 }

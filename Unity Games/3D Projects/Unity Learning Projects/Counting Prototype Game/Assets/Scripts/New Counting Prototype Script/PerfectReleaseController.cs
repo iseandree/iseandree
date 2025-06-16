@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class PerfectReleaseController : MonoBehaviour
+{
+    // Variables
+    [SerializeField] private float maxHoldTime;
+    [SerializeField] private Vector2 perfectReleaseZone = new Vector2(0.8f, 0.9f);
+    private float holdTime;
+    private float holdStartTime;
+    private bool isHolding = false;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Handle Input for Perfect Release - If the player holds down the fire button, start timing
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // Record the start time of the hold and set the holding state to true
+            holdStartTime = Time.time;
+            isHolding = true;
+            Debug.Log("Holding the ball..." + holdStartTime);
+        }
+        else if (Input.GetButtonUp("Fire1") && isHolding)   // If the player releases the fire button and is currently holding the ball, calculate the hold time
+        {
+            holdTime = Time.time - holdStartTime;
+            holdTime = Mathf.Clamp(holdTime, 0f, maxHoldTime);
+            float normalized = holdTime / maxHoldTime;
+            bool isPerfect = (normalized >= perfectReleaseZone.x && normalized <= perfectReleaseZone.y);
+            EventManager.OnBallPerfectRelease?.Invoke(holdTime, isPerfect);
+            isHolding = false;
+            Debug.Log($"Released the ball after {holdTime} seconds. Perfect Release: {isPerfect}");
+        }
+    }
+}
