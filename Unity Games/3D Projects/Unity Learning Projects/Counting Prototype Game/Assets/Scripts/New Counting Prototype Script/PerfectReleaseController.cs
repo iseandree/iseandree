@@ -8,8 +8,8 @@ public class PerfectReleaseController : MonoBehaviour
     private float holdTime;
     private float holdStartTime;
     private bool isHolding = false;
-    public float normalized;
-    public bool isPerfect;
+    private float normalized;
+    private bool isPerfect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,5 +48,10 @@ public class PerfectReleaseController : MonoBehaviour
             return 0f; // Return 0 if not holding the ball
         }
         return Mathf.Clamp01((Time.time - holdStartTime) / maxHoldTime); ; // Return the normalized hold time
+    }
+
+    public Vector2 GetPerfectReleaseZone()
+    {
+        return perfectReleaseZone; // Return the perfect release zone
     }
 }
