@@ -22,12 +22,15 @@ public class BallThrower : MonoBehaviour
         screenZ = mainCamera.WorldToScreenPoint(transform.position).z;
 
         EventManager.OnRelease += HandleRelease; // Subscribe to events for throwing the ball
+        EventManager.OnBallPerfectRelease += HandlePerfectRelease;
     }
 
     // OnDestroy is called when the script instance is being destroyed
     private void OnDestroy()
     {
         EventManager.OnRelease -= HandleRelease; // Unsubscribe from the event to prevent memory leaks
+        EventManager.OnBallPerfectRelease -= HandlePerfectRelease;
+
     }
 
     private void HandleRelease(Vector2 startPos, Vector2 endPos, float duration)
@@ -52,5 +55,10 @@ public class BallThrower : MonoBehaviour
         );
 
         EventManager.OnBallThrown?.Invoke();
+    }
+
+    private void HandlePerfectRelease(float holdTime, bool isPerfect )
+    {
+
     }
 }

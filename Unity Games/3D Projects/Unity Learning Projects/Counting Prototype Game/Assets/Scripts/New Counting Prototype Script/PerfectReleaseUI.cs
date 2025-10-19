@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,17 @@ public class PerfectReleaseUI : MonoBehaviour
     [SerializeField] private Image perfectReleaseOverlay;
     [SerializeField] private Color startColor = Color.red; // Color at the start of the hold
     [SerializeField] private Color perfectColor = Color.green; // Color at the end of the hold
+    [SerializeField] private float pulseSpeed = 4f;
+    [SerializeField] private float pulseAlphaMin = 0.3f;
+    [SerializeField] private float pulseAlphaMax = 0.8f;
     private PerfectReleaseController perfectReleaseController;
     private Vector3 overlayRotation;
     private float perfectReleaseZoneX;
     private float perfectReleaseZoneY;
+    private float perfectReleasePulseAlpha;
     private float holdTime;
     private float holdTimePercentage;
+
 
     // OnEnable is called when the script is enabled
     private void OnEnable()
@@ -67,6 +73,22 @@ public class PerfectReleaseUI : MonoBehaviour
             // Past the zone
             perfectReleaseMeter.color = startColor;
         }
+
+        // Pulse Effect
+        if(holdTime >= perfectReleaseZoneX && holdTime <= perfectReleaseZoneY)
+        {
+            perfectReleasePulseAlpha = Mathf.Lerp(pulseAlphaMin, pulseAlphaMax, 0.5f + (0.5f * Mathf.Sin(Time.time * pulseSpeed)));
+            var overlayColor = perfectReleaseOverlay.color;
+            overlayColor.a = perfectReleasePulseAlpha;
+            perfectReleaseOverlay.color = overlayColor;
+        }
+        else
+        {
+            var overlayColor = perfectReleaseOverlay.color;
+            overlayColor.a = perfectReleasePulseAlpha;
+            perfectReleaseOverlay.color = overlayColor;
+        }
+
     }
 
     // HandlePerfectRelease is called when the perfect release event is triggered
