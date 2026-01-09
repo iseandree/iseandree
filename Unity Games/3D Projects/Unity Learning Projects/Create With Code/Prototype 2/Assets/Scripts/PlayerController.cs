@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     // Private Variables
     [SerializeField] private float horizontalInput;
     [SerializeField] private float speed = 10.0f;
+    [SerializeField] private GameObject projectilePrefab;
     private float xRange = 15.0f;
  
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,5 +30,11 @@ public class PlayerController : MonoBehaviour
 
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            // Launch the projectile from the player
+            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        }
     }
 }
