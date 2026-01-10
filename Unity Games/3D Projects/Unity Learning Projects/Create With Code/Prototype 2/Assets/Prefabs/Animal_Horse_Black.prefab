@@ -1737,7 +1737,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8428235478700690506}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.91, y: -0.0000003231171, z: 12.5}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
@@ -1749,7 +1749,7 @@ Transform:
   - {fileID: 5754812805722055264}
   - {fileID: 1695107821264194564}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3787766636816444852
 Animator:
   serializedVersion: 7
@@ -1799,6 +1799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
   topBound: 30
   lowerBound: -10
+  sideBounds: 25
 --- !u!65 &1045637677185989680
 BoxCollider:
   m_ObjectHideFlags: 0
