@@ -4,8 +4,8 @@ public class SpawnManager : MonoBehaviour
 {
     // Private Variables
     [SerializeField] private GameObject[] animalPrefabs;
-    private float spawnRangeX = 18.0f;
-    private float spawnRangeZ = 18.0f;
+    private float spawnRangeX = 17.0f;
+    private float spawnRangeZ = 17.0f;
     private float startDelay = 2.0f;
     private float spawnInterval = 1.5f;
 

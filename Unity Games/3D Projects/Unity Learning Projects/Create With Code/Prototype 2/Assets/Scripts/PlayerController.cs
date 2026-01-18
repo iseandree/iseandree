@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float verticalInput;
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private GameObject projectilePrefab;
+    private Vector3 projectilePos;
     private float xRange = 15.0f;
     private float zRangeMin = 0.0f;
     private float zRangeMax = 7.0f;
@@ -14,18 +15,18 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
+        projectilePos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Launch the projectile from the player
-            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+            Instantiate(projectilePrefab, projectilePos, projectilePrefab.transform.rotation);
         }
     }
 
