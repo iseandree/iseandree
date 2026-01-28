@@ -18,22 +18,34 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-
-        playerRb.AddForce(Vector3.forward * speed * horizontalInput);
-        
-        if(isOnGround && Input.GetKeyDown(KeyCode.Space))
-        {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
-        }
+        MovePlayer();
+        AllowPlayerJump();
     }
 
+ 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
         }
+    }  
+    
+    // Allow the player to jump using Space and prevent double jumping
+    private void AllowPlayerJump()
+    {
+        if (isOnGround && Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
+        }
+    }
+
+    // Move Player horizontally
+    private void MovePlayer()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        playerRb.AddForce(Vector3.forward * speed * horizontalInput);
     }
 }
