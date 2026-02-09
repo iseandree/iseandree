@@ -4,6 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     // Private Variables
     [SerializeField] private float speed = 3.0f;
+    [SerializeField] private float falloffYvalue = -10.0f;
     private Vector3 lookDirection;
     private Rigidbody enemyRb;
     private GameObject player;
@@ -20,5 +21,10 @@ public class EnemyController : MonoBehaviour
     {
         lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * speed);
+
+        if (transform.position.y <= falloffYvalue)
+        {
+            Destroy(gameObject);
+        }
     }
 }
