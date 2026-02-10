@@ -388,7 +388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d99b508c91804174aa4b60161b39dc20, type: 2}
+  - {fileID: 2100000, guid: e6e6f7a3c9f4839409af1eae15839382, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -432,7 +432,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1165692356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1094051867
@@ -449,8 +450,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 3
   powerupStrength: 15
-  hasPowerup: 0
+  hasRegularPowerup: 0
+  hasRocketPowerup: 0
+  hasSmashPowerup: 0
   powerupIndicator: {fileID: 1118617914}
+  homingRocket: {fileID: 2082748935220181066, guid: 45c8652bb7ba1ff4e96d2a9fc2770518, type: 3}
+  rocketSpawnPoint: {fileID: 1165692355}
+  dropForce: 50
+  stopTime: 0.3
+  explosionForce: 150
+  explosionRadius: 30
+  isGrounded: 0
 --- !u!54 &1094051868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -483,6 +493,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
   m_PrefabInstance: {fileID: 964759465}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1165692355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1165692356}
+  m_Layer: 0
+  m_Name: Missle SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1165692356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165692355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1094051866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1211016355
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,22 +756,6 @@ PrefabInstance:
       value: Island
       objectReference: {fileID: 0}
     - target: {fileID: 4625923886776944, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4625923886776944, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4625923886776944, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4625923886776944, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4625923886776944, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -773,38 +798,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1301643505922104, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1403545342}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
---- !u!1 &1403545341 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1301643505922104, guid: 961be46ca9a355943ae3f65c47741bb0, type: 3}
-  m_PrefabInstance: {fileID: 1403545340}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1403545342
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403545341}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 8878a37eb67ddac4ead51890a31d6a18, type: 3}
 --- !u!1 &1834774573
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,10 +875,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377f0492a322e9a45a59a695c1917131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  enemyPrefab: {fileID: 8688964999439792551, guid: 7416832dee2ff7a4e8d5ddd1076b3f5e, type: 3}
-  powerupPrefab: {fileID: 6165414705675227520, guid: f550c3b3e475f4e4c8d9bfabba3d2a9c, type: 3}
-  waveNumber: 1
+  enemyPrefab:
+  - {fileID: 8688964999439792551, guid: 7416832dee2ff7a4e8d5ddd1076b3f5e, type: 3}
+  - {fileID: 8688964999439792551, guid: 00bdcad7df8c16640bd72dbf3249af44, type: 3}
+  powerupPrefab:
+  - {fileID: 6165414705675227520, guid: f550c3b3e475f4e4c8d9bfabba3d2a9c, type: 3}
+  - {fileID: 6165414705675227520, guid: 4e19ff9e54bc30249b904806baed131e, type: 3}
+  - {fileID: 6165414705675227520, guid: 8aa76cfbe8e47ad4f944e55c40efe2da, type: 3}
+  bossEnemyPrefab: {fileID: 8688964999439792551, guid: cffb6e345cc369f4d85e564214b357ad, type: 3}
+  waveNumber: 5
   enemyCount: 0
+  randomPowerupInt: 0
 --- !u!4 &1881027836
 Transform:
   m_ObjectHideFlags: 0
@@ -893,7 +895,7 @@ Transform:
   m_GameObject: {fileID: 1881027834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4753, y: 0.33271, z: 0.4753}
+  m_LocalPosition: {x: 0.4753, y: 0.33271, z: -0.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

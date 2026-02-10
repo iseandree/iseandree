@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Powerup
   - Enemy
+  - Regular Powerup
+  - Rocket Powerup
+  - Homing Rocket
+  - Smash Powerup
+  - Ground
   layers:
   - Default
   - TransparentFX

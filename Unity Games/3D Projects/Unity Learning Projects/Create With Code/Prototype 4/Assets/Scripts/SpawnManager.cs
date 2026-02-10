@@ -3,35 +3,61 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     // Private Variables
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject powerupPrefab;
+    [SerializeField] private GameObject[] enemyPrefab;
+    [SerializeField] private GameObject[] powerupPrefab;
+    [SerializeField] private GameObject bossEnemyPrefab;
     //[SerializeField] private int enemiesToSpawn = 3;
     [SerializeField] private int waveNumber = 1;
     [SerializeField] private int enemyCount;
+    private bool waveInProgress = true;
     private float spawnRange = 9.0f;
     private float spawnPosX;
     private float spawnPosZ;
+    private int randomEnemyInt;
+    public int randomPowerupInt;
     private Vector3 randomPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
-        Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
+        randomEnemyInt = Random.Range(0, 2);
+        randomPowerupInt = Random.Range(0, 3);
+        //SpawnEnemyWave(waveNumber);
+        Instantiate(powerupPrefab[randomPowerupInt], GenerateSpawnPosition(), powerupPrefab[randomPowerupInt].transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
         enemyCount = FindObjectsByType<EnemyController>(FindObjectsSortMode.None).Length;
-        
-        if(enemyCount == 0)
+
+        if (enemyCount == 0 && waveInProgress)
         {
+            waveInProgress = false;
             waveNumber++;
-            SpawnEnemyWave(waveNumber);
-            Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
+
+            if (waveNumber % 5 == 0)
+            {
+                SpawnBossBattle();
+            }
+            else
+            {
+                SpawnEnemyWave(waveNumber);
+                Instantiate(
+                    powerupPrefab[randomPowerupInt],
+                    GenerateSpawnPosition(),
+                    powerupPrefab[randomPowerupInt].transform.rotation
+                );
+            }
+        }
+
+        if (enemyCount > 0)
+        {
+            waveInProgress = true;
         }
     }
+
+
 
     // Method that randomly generates a spawning position for spawnable objects
     private Vector3 GenerateSpawnPosition()
@@ -47,7 +73,14 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            Instantiate(enemyPrefab[randomEnemyInt], GenerateSpawnPosition(), enemyPrefab[randomEnemyInt].transform.rotation);
         }
+    }
+
+
+    private void SpawnBossBattle()
+    {
+        Instantiate(bossEnemyPrefab, GenerateSpawnPosition(), bossEnemyPrefab.transform.rotation);
+        SpawnEnemyWave(3);
     }
 }
