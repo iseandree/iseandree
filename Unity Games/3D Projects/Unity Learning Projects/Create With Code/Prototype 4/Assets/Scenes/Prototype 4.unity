@@ -883,7 +883,7 @@ MonoBehaviour:
   - {fileID: 6165414705675227520, guid: 4e19ff9e54bc30249b904806baed131e, type: 3}
   - {fileID: 6165414705675227520, guid: 8aa76cfbe8e47ad4f944e55c40efe2da, type: 3}
   bossEnemyPrefab: {fileID: 8688964999439792551, guid: cffb6e345cc369f4d85e564214b357ad, type: 3}
-  waveNumber: 5
+  waveNumber: 4
   enemyCount: 0
   randomPowerupInt: 0
 --- !u!4 &1881027836

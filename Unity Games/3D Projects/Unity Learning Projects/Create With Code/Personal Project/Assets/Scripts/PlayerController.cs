@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private bool isOnGround = false;
 
+    private int foodCollected = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,8 +31,17 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
         }
-    }  
-    
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Food"))
+        {
+            foodCollected++;
+            Destroy(other.gameObject);
+        }
+    }
+
     // Allow the player to jump using Space and prevent double jumping
     private void AllowPlayerJump()
     {
