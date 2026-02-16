@@ -3,12 +3,15 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     // Private Variables
-    private Rigidbody targetRb;
     [SerializeField] private float minSpeed = 12.0f;
     [SerializeField] private float maxSpeed = 16.0f;
     [SerializeField] private float maxTorque = 10.0f;
     [SerializeField] private float xRange = 4.0f;
     [SerializeField] private float ySpawnPos = -6.0f;
+    [SerializeField] private int pointValue;
+    [SerializeField] public ParticleSystem explosionParticle;
+    private Rigidbody targetRb;
+    private GameManager gameManager;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,6 +21,7 @@ public class Target : MonoBehaviour
         targetRb.AddForce(RandomForce(), ForceMode.Impulse);
         targetRb.AddTorque(RandomTorque(), RandomTorque(), RandomTorque());
         transform.position = RandomSpawnPos();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -46,7 +50,9 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
         Destroy(gameObject);
+        gameManager.UpdateScore(pointValue);
     }
 
     private void OnTriggerEnter(Collider other)

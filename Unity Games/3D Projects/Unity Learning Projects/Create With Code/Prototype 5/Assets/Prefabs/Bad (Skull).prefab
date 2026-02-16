@@ -153,3 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679d6e2ff005ba943ac29203de2242de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Target
+  minSpeed: 8
+  maxSpeed: 16
+  maxTorque: 10
+  xRange: 4
+  ySpawnPos: -6
+  pointValue: -10
+  explosionParticle: {fileID: 4758139293545943008, guid: c7ad2532a6eeb40b59033c75e71fa054, type: 3}
