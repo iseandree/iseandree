@@ -48,7 +48,7 @@ public class Target : MonoBehaviour
         return Vector3.up * Random.Range(minSpeed, maxSpeed);
     }
 
-    private void OnMouseDown()
+    public void DestroyObject()
     {
         if (gameManager.isGameActive)
         {
@@ -63,7 +63,7 @@ public class Target : MonoBehaviour
         Destroy(gameObject);
         if (!other.gameObject.CompareTag("Bad"))
         {
-            gameManager.GameOver();
+            gameManager.LoseLife();
         }
     }
 }
