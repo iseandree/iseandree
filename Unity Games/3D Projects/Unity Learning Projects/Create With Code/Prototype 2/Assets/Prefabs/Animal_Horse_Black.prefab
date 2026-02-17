@@ -1719,10 +1719,10 @@ GameObject:
   - component: {fileID: 6520408508716281406}
   - component: {fileID: 3787766636816444852}
   - component: {fileID: 4390088750528308680}
-  - component: {fileID: 2901405882537430174}
   - component: {fileID: 1045637677185989680}
-  - component: {fileID: 2711182540735004509}
   - component: {fileID: 1674959014224199316}
+  - component: {fileID: 3174782057513382347}
+  - component: {fileID: 3385104691569934992}
   m_Layer: 0
   m_Name: Animal_Horse_Black
   m_TagString: Animal
@@ -1787,21 +1787,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveForward
   speed: 8
---- !u!114 &2901405882537430174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8428235478700690506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a768d123d4eea4eb2c04d5d94c7eb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
-  topBound: 30
-  lowerBound: -10
-  sideBounds: 25
 --- !u!65 &1045637677185989680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1823,18 +1808,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 25, y: 38, z: 38.233143}
   m_Center: {x: 0, y: 18.8, z: 3.3434367}
---- !u!114 &2711182540735004509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8428235478700690506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98018e7405cb65241a981766bab082f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
 --- !u!114 &1674959014224199316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,6 +1822,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimalHunger
   hungerSlider: {fileID: 5025709445301343834}
   amountToBeFed: 3
+--- !u!114 &3174782057513382347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428235478700690506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c52ee72091692143869a36cdefe1fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
+--- !u!114 &3385104691569934992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428235478700690506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e62e9a8a22fac478a927ce940e28f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
 --- !u!1 &8611687349120652664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,7 +2267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 898425267326114273, guid: 92471c2449ef3f043863f22cede5891d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 898425267326114273, guid: 92471c2449ef3f043863f22cede5891d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

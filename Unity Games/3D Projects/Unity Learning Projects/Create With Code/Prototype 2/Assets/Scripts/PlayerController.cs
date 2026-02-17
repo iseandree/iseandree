@@ -1,45 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Private Variables
-    [SerializeField] private float horizontalInput;
-    [SerializeField] private float verticalInput;
-    [SerializeField] private float speed = 10.0f;
-    [SerializeField] private GameObject projectilePrefab;
-    private Vector3 projectilePos;
-    private float xRange = 15.0f;
-    private float zRangeMin = 0.0f;
-    private float zRangeMax = 7.0f;
- 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
+    private float horizontalInput;
+    private float speed = 20.0f;
+    private float xRange = 20;
+    public GameObject projectilePrefab;
+
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        projectilePos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Launch the projectile from the player
-            Instantiate(projectilePrefab, projectilePos, projectilePrefab.transform.rotation);
-        }
-    }
-
-    private void MovePlayer()
-    {
-        // Player Input
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
-
-        // Keep the player within the bounds
-        // X Bounds
+        // Check for left and right bounds
         if (transform.position.x < -xRange)
         {
             transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
@@ -50,15 +24,26 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
-        // Z Bounds
-        if (transform.position.z < zRangeMin)
+        // Player movement left to right
+        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, zRangeMin);
+            // No longer necessary to Instantiate prefabs
+            // Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+
+            // Get an object object from the pool
+            GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject();
+            if (pooledProjectile != null)
+            {
+                pooledProjectile.SetActive(true); // activate it
+                pooledProjectile.transform.position = transform.position; // position it at player
+            }
         }
 
-        if (transform.position.z > zRangeMax)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, zRangeMax);
-        }
+
+
     }
 }

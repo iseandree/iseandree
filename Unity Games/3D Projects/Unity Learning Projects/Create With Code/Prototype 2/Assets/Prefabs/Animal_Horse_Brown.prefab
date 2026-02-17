@@ -43,10 +43,10 @@ GameObject:
   - component: {fileID: 5216075867888790957}
   - component: {fileID: 1849285160860717593}
   - component: {fileID: 2087808916237592530}
-  - component: {fileID: 8841531013157651437}
   - component: {fileID: 7845606471628218991}
-  - component: {fileID: 2240185423972681565}
   - component: {fileID: 452741337581790306}
+  - component: {fileID: 5448898456902052904}
+  - component: {fileID: 6866517518536998359}
   m_Layer: 0
   m_Name: Animal_Horse_Brown
   m_TagString: Animal
@@ -111,21 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveForward
   speed: 8
---- !u!114 &8841531013157651437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601079204696110772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a768d123d4eea4eb2c04d5d94c7eb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
-  topBound: 30
-  lowerBound: -10
-  sideBounds: 25
 --- !u!65 &7845606471628218991
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -147,18 +132,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 25, y: 38, z: 42}
   m_Center: {x: -2.5131702, y: 18.151028, z: 5.432527}
---- !u!114 &2240185423972681565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601079204696110772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98018e7405cb65241a981766bab082f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
 --- !u!114 &452741337581790306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +146,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimalHunger
   hungerSlider: {fileID: 3554628921719460337}
   amountToBeFed: 3
+--- !u!114 &5448898456902052904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601079204696110772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c52ee72091692143869a36cdefe1fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
+--- !u!114 &6866517518536998359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601079204696110772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e62e9a8a22fac478a927ce940e28f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
 --- !u!1 &676142701896384490
 GameObject:
   m_ObjectHideFlags: 0
