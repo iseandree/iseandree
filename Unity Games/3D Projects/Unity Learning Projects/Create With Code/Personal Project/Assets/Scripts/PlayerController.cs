@@ -8,13 +8,14 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private Rigidbody playerRb;
     private bool isOnGround = false;
-
+    private Animator animator;
     private int foodCollected = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();    
+        playerRb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -56,7 +57,10 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-
-        playerRb.AddForce(Vector3.forward * speed * horizontalInput);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * horizontalInput);
+        if (horizontalInput < 0.25f)
+        {
+            animator.SetFloat("Speed_f", speed);
+        }
     }
 }
