@@ -7,6 +7,7 @@ TagManager:
   - Wall Node
   - Game Ball
   - Out Of Bounds
+  - Point Box
   layers:
   - Default
   - TransparentFX

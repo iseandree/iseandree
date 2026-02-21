@@ -6,12 +6,18 @@ using System.Collections.Generic;
 
 public class FallingBall : MonoBehaviour
 {
-    // Private Variables
+    // Serialize Field Variables
     [SerializeField] private float horizontalMovementSpeed;
+    [SerializeField] private ParticleSystem bounceParticles;
     [SerializeField] private float zBound = 6.50f;
+
+    // Private Variables
     private ConstantForce ballGravity;
     private bool canFlipDirection = false;
     private GameBallSpawner gameBallSpawner;
+
+    // Public Variables
+    public bool isDropped = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,6 +35,7 @@ public class FallingBall : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             ballGravity.enabled = true;
+            isDropped = true;
             horizontalMovementSpeed = 0;
         }
     }
@@ -59,6 +66,7 @@ public class FallingBall : MonoBehaviour
     public void ResetBall()
     {
         gameBallSpawner.SpawnGameBall();
+        isDropped = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,5 +76,13 @@ public class FallingBall : MonoBehaviour
             Destroy(gameObject);
             ResetBall();
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Wall Node"))
+        {
+            bounceParticles.Play();
+        }       
     }
 }
