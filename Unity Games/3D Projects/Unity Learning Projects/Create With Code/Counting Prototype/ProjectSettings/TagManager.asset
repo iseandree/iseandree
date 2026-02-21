@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Wall Node
+  - Game Ball
+  - Out Of Bounds
   layers:
   - Default
   - TransparentFX
