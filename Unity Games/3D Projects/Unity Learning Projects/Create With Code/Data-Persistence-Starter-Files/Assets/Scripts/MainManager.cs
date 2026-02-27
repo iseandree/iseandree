@@ -60,8 +60,10 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+
             if(m_Points > menuManager.highScore)
             {
+                menuManager.highScore = m_Points;
                 bestScoreText.text = "Best Score : " + menuManager.playerName + " : " + menuManager.highScore;
             }
 
@@ -83,6 +85,7 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        bestScoreText.text = "Best Score : " + menuManager.playerName + " : " + menuManager.highScore;
         menuManager.SaveGame();
     }
 }
