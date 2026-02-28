@@ -4,7 +4,7 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     // Public Static Variables
-    public static MainManager Instance;
+    public static MainManager Instance { get; private set; }
 
     // Public Variables
     public Color teamColor;
