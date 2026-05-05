@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 9f67432849d55614a82d62c368253802
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8785341572475654545
+    second: MC Walk Sprite Sheet_0
+  - first:
+      213: -1549146587093511735
+    second: MC Walk Sprite Sheet_1
+  - first:
+      213: 7541996460691780662
+    second: MC Walk Sprite Sheet_2
+  - first:
+      213: 1456627116875979400
+    second: MC Walk Sprite Sheet_3
+  - first:
+      213: -1713650686609501321
+    second: MC Walk Sprite Sheet_4
+  - first:
+      213: -7785031830358208356
+    second: MC Walk Sprite Sheet_5
+  - first:
+      213: -7729585886806370181
+    second: MC Walk Sprite Sheet_6
+  - first:
+      213: 1046819172161792042
+    second: MC Walk Sprite Sheet_7
+  - first:
+      213: -2388247493650743944
+    second: MC Walk Sprite Sheet_8
+  - first:
+      213: -2220893191762097355
+    second: MC Walk Sprite Sheet_9
+  - first:
+      213: -1785722726565359224
+    second: MC Walk Sprite Sheet_10
+  - first:
+      213: 331858134823347848
+    second: MC Walk Sprite Sheet_11
+  - first:
+      213: -1297849556447877594
+    second: MC Walk Sprite Sheet_12
+  - first:
+      213: -6610799790114214742
+    second: MC Walk Sprite Sheet_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 9
+        width: 87
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6eed16f262341680800000000000000
+      internalID: -8785341572475654545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 9
+        width: 87
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c158430363508ae0800000000000000
+      internalID: -1549146587093511735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 7
+        width: 108
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63479c062dd8aa860800000000000000
+      internalID: 7541996460691780662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 1738
+        y: 7
+        width: 108
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88a189f25aaf63410800000000000000
+      internalID: 1456627116875979400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 2265
+        y: 11
+        width: 83
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7735983a7c3e738e0800000000000000
+      internalID: -1713650686609501321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 2777
+        y: 11
+        width: 83
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c90d3621cc206f390800000000000000
+      internalID: -7785031830358208356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 3289
+        y: 8
+        width: 84
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b78980cc69efab490800000000000000
+      internalID: -7729585886806370181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 3801
+        y: 8
+        width: 84
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a28a5c4ad7c078e00800000000000000
+      internalID: 1046819172161792042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 4312
+        y: 9
+        width: 87
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87dfa39de8d3bded0800000000000000
+      internalID: -2388247493650743944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 4824
+        y: 9
+        width: 87
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53bcfeca86dcd21e0800000000000000
+      internalID: -2220893191762097355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 5322
+        y: 7
+        width: 108
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 881dabf24a6d737e0800000000000000
+      internalID: -1785722726565359224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 5834
+        y: 7
+        width: 108
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88628f1273ffa9400800000000000000
+      internalID: 331858134823347848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 6361
+        y: 8
+        width: 84
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 626a60864bc1dfde0800000000000000
+      internalID: -1297849556447877594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC Walk Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 6873
+        y: 8
+        width: 84
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aace30dcd98b144a0800000000000000
+      internalID: -6610799790114214742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MC Walk Sprite Sheet_0: -8785341572475654545
+      MC Walk Sprite Sheet_1: -1549146587093511735
+      MC Walk Sprite Sheet_10: -1785722726565359224
+      MC Walk Sprite Sheet_11: 331858134823347848
+      MC Walk Sprite Sheet_12: -1297849556447877594
+      MC Walk Sprite Sheet_13: -6610799790114214742
+      MC Walk Sprite Sheet_2: 7541996460691780662
+      MC Walk Sprite Sheet_3: 1456627116875979400
+      MC Walk Sprite Sheet_4: -1713650686609501321
+      MC Walk Sprite Sheet_5: -7785031830358208356
+      MC Walk Sprite Sheet_6: -7729585886806370181
+      MC Walk Sprite Sheet_7: 1046819172161792042
+      MC Walk Sprite Sheet_8: -2388247493650743944
+      MC Walk Sprite Sheet_9: -2220893191762097355
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
