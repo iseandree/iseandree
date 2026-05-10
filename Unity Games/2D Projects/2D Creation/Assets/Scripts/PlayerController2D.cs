@@ -9,10 +9,9 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float acceleration = 6.0f;
     [SerializeField] private float deceleration = 6.0f;
-    [SerializeField] private float speedMultiplier = 1.5f;
+    [SerializeField] private float speedMultiplier = 1.75f;
     [SerializeField] private float jumpForce = 6.0f;
     [SerializeField] private float jumpCooldown = 0.50f;
-
 
     // Serialized fields - Debug checks
     [SerializeField] private bool isGrounded;
@@ -21,41 +20,49 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float circleCastRadius = 0.75f;
     [SerializeField] private float rayCastLength = 2f;
 
-    // Private Variables
+    // Private Variables - Movement
     private float lastJumpTime;
     private float runSpeed;
     private float walkSpeed;
     private float moveInput;
     private bool moveInputPresent;
+    private bool isFacingLeft = false;
+    private bool jumpRequest = false;
+    private Animator animator;
+
+    // Private Variables - Input
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction runAction;
     private InputAction interactAction;
+
+    // Private Variables - Components
     private Rigidbody2D rb;
     private LayerMask groundLayer;
     private LayerMask borderLayer;
     private GameObject interactable;
-    private bool isFacingLeft = false;
-    private bool jumpRequest = false;
-    private Animator animator;
 
     // Public Variables
     public List<GameObject> inventory;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
+        // Initialize Components
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         groundLayer = LayerMask.GetMask("Ground");
         borderLayer = LayerMask.GetMask("Border");
+
+        // Initialize Player Inputs
         moveAction = playerInput.actions.FindAction("Move");
         jumpAction = playerInput.actions.FindAction("Jump");
         runAction = playerInput.actions.FindAction("Run");
         interactAction = playerInput.actions.FindAction("Interact");
+
+        // Initialize Movement variables
         lastJumpTime = -jumpCooldown;
         walkSpeed = moveSpeed;
         runSpeed = moveSpeed * speedMultiplier;
@@ -64,27 +71,17 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get horizontal input
+        // Get horizontal input and Update 'moveInputPresent' based on whether there is any input (regardless of direction) using Absolutes
         moveInput = moveAction.ReadValue<Vector2>().x;
-
-        // Update 'isWalking' based on whether there is any input (regardless of direction)
         moveInputPresent = Mathf.Abs(moveInput) > 0.1f;
         isRunning = runAction.IsPressed();
         HorizontalMovementAnimations();
 
-        // Handle flipping separately
+        // Handle flipping directions
         FaceInputDirection(moveInput);
 
-        // Allow the player to jump but prevent the player from spamming jump
-        if (jumpAction.WasPerformedThisFrame() && isGrounded && Time.time >= lastJumpTime + jumpCooldown)
-        {
-            jumpRequest = true;
-        }
-
-        if(jumpAction.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-        }
+        // Jump
+        ActivateJump();
 
         // Check if the player is near a collectible object
         if (DetectInteractable() && interactAction.WasPressedThisFrame())
@@ -93,20 +90,23 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles physics-based updates for the player, including movement and jump actions. Called at a fixed time
+    /// interval by the physics engine.
+    /// </summary>
+    /// <remarks>This method should be used to apply forces and handle physics-related logic for the player
+    /// character. It is called automatically by the engine at consistent intervals, making it suitable for physics
+    /// calculations rather than frame-dependent updates.</remarks>
     private void FixedUpdate()
     {
         // Check if the player is grounded
         CheckIsGrounded();
 
-        //Horizontal movement
-        float currentMaxSpeed = isRunning ? runSpeed : walkSpeed;
-        float targetSpeed = moveInput * currentMaxSpeed;
-        float speedDiff = targetSpeed - rb.linearVelocity.x;
-        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-        float movement = speedDiff * accelRate;
-        rb.AddForce(Vector2.right * movement, ForceMode2D.Force);
+        // Horizontal movement
+        ApplyMovementForces();
 
-        if(jumpRequest)
+        // Handle Jump Forces
+        if (jumpRequest)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -114,9 +114,105 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if the player is Grounded and draw the line so I can see it in the scene
+    /// </summary>
+    private void CheckIsGrounded()
+    {
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, groundLayer);
+        Debug.DrawRay(transform.position, Vector2.down * rayCastLength, Color.green);
+    }
+
+    /// <summary>
+    /// Make the player face the direction in which they are recieving input for
+    /// </summary>
+    /// <param name="moveInput"></param>
+    private void FaceInputDirection(float moveInput)
+    {
+        if (moveInput < 0 && !isFacingLeft)
+        {
+            transform.Rotate(0.0f, 180f, 0.0f);
+            isFacingLeft = true;
+        }
+        else if (moveInput > 0 && isFacingLeft)
+        {
+            transform.Rotate(0.0f, 180f, 0.0f);
+            isFacingLeft = false;
+        }
+    }
+
+    /// <summary>
+    /// Applies horizontal movement forces to the Rigidbody2D based on current input and movement state.
+    /// </summary>
+    /// <remarks>This method adjusts the Rigidbody2D's velocity to match the desired speed, taking into
+    /// account whether the character is running or walking. It should be called during the physics update to ensure
+    /// smooth and responsive movement.</remarks>
+    private void ApplyMovementForces()
+    {
+        float currentMaxSpeed = isRunning ? runSpeed : walkSpeed;
+        float targetSpeed = moveInput * currentMaxSpeed;
+        float speedDiff = targetSpeed - rb.linearVelocity.x;
+        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+        float movement = speedDiff * accelRate;
+        rb.AddForce(Vector2.right * movement, ForceMode2D.Force);
+    }
+
+    /// <summary>
+    /// Updates the character's movement state and animation based on input and run action status.
+    /// </summary>
+    /// <remarks>This method should be called each frame to ensure the character's animation and movement
+    /// speed reflect the current input. It sets the appropriate animation states for running and walking, and adjusts
+    /// the movement speed accordingly.</remarks>
+    private void HorizontalMovementAnimations()
+    {
+        if(isRunning && moveInputPresent)
+        {
+            animator.SetBool("isRunning", true);
+            animator.SetBool("isWalking", false);
+        }
+        else if (moveInputPresent && !isRunning)
+        {
+            animator.SetBool("isWalking", true);
+            animator.SetBool("isRunning", false);
+        }
+        else if (!moveInputPresent)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
+        }
+    }
+
+    /// <summary>
+    /// Handles player jump activation and modifies jump behavior based on input state.
+    /// </summary>
+    /// <remarks>This method should be called each frame to process jump input. It ensures that the player can
+    /// only initiate a jump when grounded and after the jump cooldown has elapsed. If the jump input is released while
+    /// the player is moving upward, the upward velocity is reduced to allow for variable jump heights.</remarks>
+    private void ActivateJump()
+    {
+        // Allow the player to jump but prevent the player from spamming jump
+        if (jumpAction.WasPerformedThisFrame() && isGrounded && Time.time >= lastJumpTime + jumpCooldown)
+        {
+            jumpRequest = true;
+        }
+
+        if (jumpAction.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
+    }
+
+    /// <summary>
+    /// Determines whether an interactable object is within range and updates the current interactable reference
+    /// accordingly.
+    /// </summary>
+    /// <remarks>This method searches for the closest collider tagged as "Interactable" within a specified
+    /// radius of the player. If found, the interactable reference is updated to the corresponding GameObject;
+    /// otherwise, it is set to null.</remarks>
+    /// <returns>true if a valid interactable object is detected within range; otherwise, false.</returns>
     private bool DetectInteractable()
     {
-        // Get a list of all possible colliders within the range of the player
+        // Get an array of all possible colliders within the range of the player
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCastRadius);
 
         // Check if there are any colliders within the range of the player. If not close the method
@@ -160,61 +256,17 @@ public class PlayerController2D : MonoBehaviour
         interactable = matchingInteractable.gameObject;
         return true;
     }
-    
-    /// <summary>
-    /// Check if the player is Grounded and draw the line so I can see it in the scene
-    /// </summary>
-    private void CheckIsGrounded()
-    {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, groundLayer);
-        Debug.DrawRay(transform.position, Vector2.down * rayCastLength, Color.green);
-    }
 
     /// <summary>
-    /// Make the player face the direction in which they are recieving input for
+    /// Adds the specified game object to the player's inventory and disables the associated interactable object.
     /// </summary>
-    /// <param name="moveInput"></param>
-    private void FaceInputDirection(float moveInput)
-    {
-        if (moveInput < 0 && !isFacingLeft)
-        {
-            transform.Rotate(0.0f, 180f, 0.0f);
-            isFacingLeft = true;
-        }
-        else if (moveInput > 0 && isFacingLeft)
-        {
-            transform.Rotate(0.0f, 180f, 0.0f);
-            isFacingLeft = false;
-        }
-    }
-
-    /// <summary>
-    /// Updates the character's movement state and animation based on input and run action status.
-    /// </summary>
-    /// <remarks>This method should be called each frame to ensure the character's animation and movement
-    /// speed reflect the current input. It sets the appropriate animation states for running and walking, and adjusts
-    /// the movement speed accordingly.</remarks>
-    private void HorizontalMovementAnimations()
-    {
-        if(isRunning && moveInputPresent)
-        {
-            animator.SetBool("isRunning", true);
-            animator.SetBool("isWalking", false);
-        }
-        else if (moveInputPresent && !isRunning)
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetBool("isRunning", false);
-        }
-        else if (!moveInputPresent)
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isRunning", false);
-        }
-    }
-
+    /// <remarks>This method should be called when the player interacts with an item that can be collected.
+    /// After the item is added to the inventory, the interactable object is deactivated to prevent further
+    /// interaction.</remarks>
+    /// <param name="item">The game object to collect and add to the inventory. Cannot be null.</param>
     private void CollectItem(GameObject item)
     {
+        animator.SetTrigger("PickupTrigger");
         inventory.Add(item);
         Debug.Log("Item added to inventory: " + item.name);
         interactable.SetActive(false);

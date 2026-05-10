@@ -529,7 +529,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33033, y: 0.17154, z: -10}
+  m_LocalPosition: {x: 2.33033, y: -2.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -663,7 +663,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 757361255}
   - component: {fileID: 757361256}
   m_Layer: 0
-  m_Name: Temp Player
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -803,7 +803,7 @@ Transform:
   m_GameObject: {fileID: 757361246}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33033, y: 0.17154, z: 0}
+  m_LocalPosition: {x: 2.33033, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -822,7 +822,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 2
+  m_LinearDamping: 10
   m_AngularDamping: 0.05
   m_GravityScale: 9.84
   m_Material: {fileID: 0}
@@ -1764,6 +1764,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e4763833dd2cc46bfa42a8ecdb59f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  difficulty: 2
+  timeStamps:
+  - timeRatio: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+    intensity: 2
+  - timeRatio: 0.6
+    color: {r: 0.9960785, g: 0.8862746, b: 0.7254902, a: 0}
+    intensity: 1
+  - timeRatio: 0.8
+    color: {r: 0.24705884, g: 0.5137255, b: 0.91372555, a: 1}
+    intensity: 0.4
+  cycleLength: 0
+  light2D: {fileID: 619394801}
   background: {fileID: 970702891}
   timerText: {fileID: 1820361052}
 --- !u!4 &1722121343
