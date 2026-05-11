@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
         public float intensity;
     }
 
-    private enum DifficultySettings {Easy, Normal, Hard};
-    [SerializeField] private DifficultySettings difficulty;
+    public enum DifficultySettings { Easy, Normal, Hard };
+    [SerializeField] public DifficultySettings difficultySelected;
+
+    public static GameManager Instance; // Singleton instance
 
     // SerializeField - Day/Night
     [SerializeField] DayAndNightTimeStamp[] timeStamps;
@@ -41,19 +43,39 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DifficultySelect();
-        isGameRunning = true;
-        cycleLength = countDown * difficultyModifier;
+        DifficultySelect(GameEvents.SavedDifficulty);
         currentTimeStampIndex = -1;
         CycleTimeStamps();
+        Debug.Log(difficultySelected);
     }
 
-   
+    // Awake is called when the script instance is being loaded
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.OnDifficultySelected += DifficultySelect;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnDifficultySelected -= DifficultySelect;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isGameRunning)
+        if (!isGameRunning)
         {
             return;
         }
@@ -69,17 +91,21 @@ public class GameManager : MonoBehaviour
         light2D.intensity = Mathf.Lerp(current.intensity, next.intensity, lerpTime);
 
         // Check if a time stamp has passed, compare the updated currentCycleTime with the time in seconds of the next time stamp
-        if(currentCycleTime >= nextTimeStamp && currentTimeStampIndex < timeStamps.Length - 1)
+        if (currentCycleTime >= nextTimeStamp)
         {
-            light2D.color = next.color;
-            light2D.intensity = next.intensity;
-            CycleTimeStamps();
+            // If we aren't at the very end of the array, move to next stamp
+            if (currentTimeStampIndex < timeStamps.Length - 1)
+            {
+                CycleTimeStamps();
+            }
+            // If we are at the end, wrap back to the start or stop the game
+            else if (currentCycleTime >= cycleLength)
+            {
+                // To loop the day, reset currentCycleTime to 0 and call CycleTimeStamps
+                // To stop the game, keep your current logic:
+                isGameRunning = false;
+            }
         }
-        else if (currentCycleTime >= cycleLength)
-        {
-            isGameRunning = false;
-        }
-
         timerText.text = currentCycleTime.ToString();
     }
 
@@ -100,25 +126,34 @@ public class GameManager : MonoBehaviour
         // Reached the last mark in the cycle re-add the cycle length to this duration to get back a positive number
         if (timeStampDifference < 0)
         {
-            timeStampDifference += cycleLength; 
+            timeStampDifference += cycleLength;
         }
     }
 
-    void DifficultySelect()
+    public void DifficultySelect(int difficulty)
     {
-        switch(difficulty)
+        switch (difficulty)
         {
-            case DifficultySettings.Easy:
+            case 0:
                 difficultyModifier = 1.5f;
+                difficultySelected = DifficultySettings.Easy;
+                isGameRunning = true;
                 break;
-            case DifficultySettings.Normal:
+            case 1:
                 difficultyModifier = 1.0f;
+                difficultySelected = DifficultySettings.Normal;
+                isGameRunning = true;
                 break;
-            case DifficultySettings.Hard:
+            case 2:
                 difficultyModifier = 0.5f;
+                difficultySelected = DifficultySettings.Hard;
+                isGameRunning = true;
                 break;
             default:
                 break;
         }
+
+        cycleLength = countDown * difficultyModifier;
+        isGameRunning = true;
     }
 }

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -76,6 +77,7 @@ public class PlayerController2D : MonoBehaviour
         moveInputPresent = Mathf.Abs(moveInput) > 0.1f;
         isRunning = runAction.IsPressed();
         HorizontalMovementAnimations();
+        UpdateAirAnimations();
 
         // Handle flipping directions
         FaceInputDirection(moveInput);
@@ -89,6 +91,8 @@ public class PlayerController2D : MonoBehaviour
             CollectItem(interactable);
         }
     }
+
+    
 
     /// <summary>
     /// Handles physics-based updates for the player, including movement and jump actions. Called at a fixed time
@@ -200,6 +204,17 @@ public class PlayerController2D : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
+    }
+
+    /// <summary>
+    /// Updates the animator parameters to reflect the character's airborne state.
+    /// </summary>
+    /// <remarks>Call this method to synchronize animation state with the character's grounded status. This
+    /// ensures that jump or fall animations are triggered appropriately when the character leaves or returns to the
+    /// ground.</remarks>
+    private void UpdateAirAnimations()
+    {
+        animator.SetBool("isJumping", !isGrounded);
     }
 
     /// <summary>
