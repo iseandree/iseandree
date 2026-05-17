@@ -1,0 +1,753 @@
+fileFormatVersion: 2
+guid: fbd08c00e32526c499b187f9129a79c1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1366906578979994992
+    second: Adult Pickup_0
+  - first:
+      213: 832513687870573139
+    second: Adult Pickup_1
+  - first:
+      213: 5291484679196030477
+    second: Adult Pickup_2
+  - first:
+      213: 5341154144234406427
+    second: Adult Pickup_3
+  - first:
+      213: -1423008152719256633
+    second: Adult Pickup_4
+  - first:
+      213: 3077879142667073260
+    second: Adult Pickup_5
+  - first:
+      213: 6698669199378742920
+    second: Adult Pickup_6
+  - first:
+      213: -4236021516787205891
+    second: Adult Pickup_7
+  - first:
+      213: -3066753689589697915
+    second: Adult Pickup_8
+  - first:
+      213: -9181983642866335577
+    second: Adult Pickup_9
+  - first:
+      213: -5041161750293920303
+    second: Adult Pickup_10
+  - first:
+      213: 8159155320977655641
+    second: Adult Pickup_11
+  - first:
+      213: 5073654367833880371
+    second: Adult Pickup_12
+  - first:
+      213: -1383218328801302105
+    second: Adult Pickup_13
+  - first:
+      213: -7258551413198827840
+    second: Adult Pickup_14
+  - first:
+      213: -3517754684923398081
+    second: Adult Pickup_15
+  - first:
+      213: -5998749536523611828
+    second: Adult Pickup_16
+  - first:
+      213: -797818760982195497
+    second: Adult Pickup_17
+  - first:
+      213: 3170301273191575265
+    second: Adult Pickup_18
+  - first:
+      213: -799781589963029389
+    second: Adult Pickup_19
+  - first:
+      213: 7479979586562951889
+    second: Adult Pickup_20
+  - first:
+      213: -5937696832971933533
+    second: Adult Pickup_21
+  - first:
+      213: 45050591594670375
+    second: Adult Pickup_22
+  - first:
+      213: -472250354522393940
+    second: Adult Pickup_23
+  - first:
+      213: -2602957791101287608
+    second: Adult Pickup_24
+  - first:
+      213: 7260044297243136099
+    second: Adult Pickup_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Adult Pickup_0
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 3
+        width: 136
+        height: 506
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 092c0c665b5c70de0800000000000000
+      internalID: -1366906578979994992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_1
+      rect:
+        serializedVersion: 2
+        x: 1229
+        y: 3
+        width: 135
+        height: 506
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35a0d2cc9cead8b00800000000000000
+      internalID: 832513687870573139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_2
+      rect:
+        serializedVersion: 2
+        x: 2764
+        y: 3
+        width: 159
+        height: 506
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d06b6edb7412f6940800000000000000
+      internalID: 5291484679196030477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_3
+      rect:
+        serializedVersion: 2
+        x: 3275
+        y: 3
+        width: 160
+        height: 506
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1282b145679f1a40800000000000000
+      internalID: 5341154144234406427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_6
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 3
+        width: 182
+        height: 358
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ef1d0552476fc50800000000000000
+      internalID: 6698669199378742920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_7
+      rect:
+        serializedVersion: 2
+        x: 1771
+        y: 3
+        width: 162
+        height: 380
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8bcf6bfd0a635c0800000000000000
+      internalID: -4236021516787205891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_8
+      rect:
+        serializedVersion: 2
+        x: 2285
+        y: 3
+        width: 176
+        height: 358
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 582336684c3b075d0800000000000000
+      internalID: -3066753689589697915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_9
+      rect:
+        serializedVersion: 2
+        x: 3803
+        y: 3
+        width: 176
+        height: 401
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a04189668a039080800000000000000
+      internalID: -9181983642866335577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_10
+      rect:
+        serializedVersion: 2
+        x: 4331
+        y: 3
+        width: 165
+        height: 380
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5c17ae8123a0ab0800000000000000
+      internalID: -5041161750293920303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_11
+      rect:
+        serializedVersion: 2
+        x: 4826
+        y: 3
+        width: 176
+        height: 413
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9578c1e09842b3170800000000000000
+      internalID: 8159155320977655641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_13
+      rect:
+        serializedVersion: 2
+        x: 5338
+        y: 3
+        width: 176
+        height: 413
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a92df03242ddcce0800000000000000
+      internalID: -1383218328801302105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_15
+      rect:
+        serializedVersion: 2
+        x: 5866
+        y: 3
+        width: 181
+        height: 314
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f38bc2e70cc6e2fc0800000000000000
+      internalID: -3517754684923398081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_16
+      rect:
+        serializedVersion: 2
+        x: 6377
+        y: 3
+        width: 182
+        height: 314
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4198fa441920cca0800000000000000
+      internalID: -5998749536523611828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_17
+      rect:
+        serializedVersion: 2
+        x: 6889
+        y: 3
+        width: 170
+        height: 336
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d2938c50149de4f0800000000000000
+      internalID: -797818760982195497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_18
+      rect:
+        serializedVersion: 2
+        x: 7400
+        y: 3
+        width: 171
+        height: 336
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee6d83063c2ffb20800000000000000
+      internalID: 3170301273191575265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_19
+      rect:
+        serializedVersion: 2
+        x: 7901
+        y: 3
+        width: 176
+        height: 401
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3744b50a1ea96e4f0800000000000000
+      internalID: -799781589963029389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_20
+      rect:
+        serializedVersion: 2
+        x: 8924
+        y: 3
+        width: 209
+        height: 335
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da0248adc93ec760800000000000000
+      internalID: 7479979586562951889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_21
+      rect:
+        serializedVersion: 2
+        x: 10970
+        y: 3
+        width: 214
+        height: 335
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a8febe8030199da0800000000000000
+      internalID: -5937696832971933533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_22
+      rect:
+        serializedVersion: 2
+        x: 5858
+        y: 11
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 729ebec364d00a000800000000000000
+      internalID: 45050591594670375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_23
+      rect:
+        serializedVersion: 2
+        x: 6369
+        y: 11
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca2f3adfdca3279f0800000000000000
+      internalID: -472250354522393940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_24
+      rect:
+        serializedVersion: 2
+        x: 8396
+        y: 3
+        width: 236
+        height: 275
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84382181eaf60ebd0800000000000000
+      internalID: -2602957791101287608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_25
+      rect:
+        serializedVersion: 2
+        x: 9419
+        y: 3
+        width: 236
+        height: 275
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36017cea2dbd0c460800000000000000
+      internalID: 7260044297243136099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_26
+      rect:
+        serializedVersion: 2
+        x: 9930
+        y: 3
+        width: 237
+        height: 275
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3721103d1e717044bbc2e3e6fefcf67b
+      internalID: 863027374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adult Pickup_27
+      rect:
+        serializedVersion: 2
+        x: 10442
+        y: 3
+        width: 241
+        height: 275
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03993a59398c73e4092057ec8278115b
+      internalID: 1423050755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c0f3dcc034e4c324ab35c51f5265b214
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Adult Pickup_0: -1366906578979994992
+      Adult Pickup_1: 832513687870573139
+      Adult Pickup_10: -5041161750293920303
+      Adult Pickup_11: 8159155320977655641
+      Adult Pickup_12: 5073654367833880371
+      Adult Pickup_13: -1383218328801302105
+      Adult Pickup_14: -7258551413198827840
+      Adult Pickup_15: -3517754684923398081
+      Adult Pickup_16: -5998749536523611828
+      Adult Pickup_17: -797818760982195497
+      Adult Pickup_18: 3170301273191575265
+      Adult Pickup_19: -799781589963029389
+      Adult Pickup_2: 5291484679196030477
+      Adult Pickup_20: 7479979586562951889
+      Adult Pickup_21: -5937696832971933533
+      Adult Pickup_22: 45050591594670375
+      Adult Pickup_23: -472250354522393940
+      Adult Pickup_24: -2602957791101287608
+      Adult Pickup_25: 7260044297243136099
+      Adult Pickup_26: 863027374
+      Adult Pickup_27: 1423050755
+      Adult Pickup_3: 5341154144234406427
+      Adult Pickup_4: -1423008152719256633
+      Adult Pickup_5: 3077879142667073260
+      Adult Pickup_6: 6698669199378742920
+      Adult Pickup_7: -4236021516787205891
+      Adult Pickup_8: -3066753689589697915
+      Adult Pickup_9: -9181983642866335577
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

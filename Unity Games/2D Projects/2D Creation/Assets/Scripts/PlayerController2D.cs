@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController2D : MonoBehaviour
+public class PlayerController2D : MonoBehaviour, IDataPersistence
 {
     // Serialized fields - Movement
     [SerializeField] private float moveSpeed = 3.0f;
@@ -47,6 +47,9 @@ public class PlayerController2D : MonoBehaviour
     // Public Variables
     public List<GameObject> inventory;
 
+    // Private Variables - Game Mechanics
+    private Vector3 auraPoints;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
@@ -60,13 +63,16 @@ public class PlayerController2D : MonoBehaviour
         // Initialize Player Inputs
         moveAction = playerInput.actions.FindAction("Move");
         jumpAction = playerInput.actions.FindAction("Jump");
-        runAction = playerInput.actions.FindAction("Run");
+        runAction = playerInput.actions.FindAction("Sprint");
         interactAction = playerInput.actions.FindAction("Interact");
 
         // Initialize Movement variables
         lastJumpTime = -jumpCooldown;
         walkSpeed = moveSpeed;
         runSpeed = moveSpeed * speedMultiplier;
+
+        // Initialize Game Mechanic related Variables
+        auraPoints = new Vector3(0 , 0, 0);
     }
 
     // Update is called once per frame
@@ -88,11 +94,14 @@ public class PlayerController2D : MonoBehaviour
         // Check if the player is near a collectible object
         if (DetectInteractable() && interactAction.WasPressedThisFrame())
         {
-            CollectItem(interactable);
+            Items pickupItem = interactable.GetComponent<Items>();
+            if(pickupItem != null)
+            {
+                pickupItem.Collect();
+                animator.SetTrigger("PickupTrigger");
+            }
         }
     }
-
-    
 
     /// <summary>
     /// Handles physics-based updates for the player, including movement and jump actions. Called at a fixed time
@@ -272,23 +281,20 @@ public class PlayerController2D : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Adds the specified game object to the player's inventory and disables the associated interactable object.
-    /// </summary>
-    /// <remarks>This method should be called when the player interacts with an item that can be collected.
-    /// After the item is added to the inventory, the interactable object is deactivated to prevent further
-    /// interaction.</remarks>
-    /// <param name="item">The game object to collect and add to the inventory. Cannot be null.</param>
-    private void CollectItem(GameObject item)
-    {
-        animator.SetTrigger("PickupTrigger");
-        inventory.Add(item);
-        Debug.Log("Item added to inventory: " + item.name);
-        interactable.SetActive(false);
-    }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, circleCastRadius);
     }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = transform.position;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
 }
+

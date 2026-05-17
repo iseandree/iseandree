@@ -24,10 +24,13 @@ public class NPCAI : MonoBehaviour
     private float timer;
     private bool isWalking = true;
     private bool isFlipping = false;
+    private Animator animator;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         randomTime = Random.Range(minWalkTime, maxWalkTime);
     }
@@ -48,8 +51,10 @@ public class NPCAI : MonoBehaviour
         if (isWalking)
         {
             rb.linearVelocity = Vector2.right * facingDirection * moveSpeed;
+            
         }
-
+        
+        animator.SetBool("isWalking", isWalking);
     }
 
     private void StateChange()
