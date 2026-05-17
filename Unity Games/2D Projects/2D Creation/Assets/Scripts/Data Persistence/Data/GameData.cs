@@ -13,6 +13,7 @@ public class GameData
     public Dictionary<string, bool> checkPointsCrossed;
     public Dictionary<string, bool> itemsCollected;
     public InventorySlot slot;
+    public Vector3 auraScale;
 
     public GameData()
     {
@@ -23,8 +24,10 @@ public class GameData
         playerPosition = Vector3.zero;
         checkPointsCrossed = new Dictionary<string, bool>();
         itemsCollected = new Dictionary<string, bool>();
+        this.slot = new InventorySlot();
         this.slot.itemSO = null;
         this.slot.quantity = 0;
+        this.auraScale = new Vector3(0, 0, 0);
     }
 
 }

@@ -44,9 +44,6 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private LayerMask borderLayer;
     private GameObject interactable;
 
-    // Public Variables
-    public List<GameObject> inventory;
-
     // Private Variables - Game Mechanics
     private Vector3 auraPoints;
 

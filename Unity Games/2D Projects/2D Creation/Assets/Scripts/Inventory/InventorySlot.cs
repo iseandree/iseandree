@@ -12,6 +12,11 @@ public class InventorySlot : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
+    private void Start()
+    {
+        inventoryManager = GetComponentInParent<InventoryManager>();
+    }
+
     public void UpdateUI()
     {
         if(itemSO != null)
