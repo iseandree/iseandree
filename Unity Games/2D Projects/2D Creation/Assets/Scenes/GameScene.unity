@@ -440,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataPersistenceManager
   fileName: data.game
+  useEncryption: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,7 +1006,7 @@ MonoBehaviour:
   isGrounded: 0
   isRunning: 0
   isNear: 0
-  circleCastRadius: 1
+  circleCastRadius: 1.5
   rayCastLength: 0.2
 --- !u!70 &757361255
 CapsuleCollider2D:
@@ -2229,7 +2230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7014041656681708515, guid: bb35b4930df61814698dbf290f4641e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.48444
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7014041656681708515, guid: bb35b4930df61814698dbf290f4641e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2263,6 +2264,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7265332962952547212, guid: bb35b4930df61814698dbf290f4641e6, type: 3}
+      propertyPath: iD
+      value: 27c20c1b-1f0b-4c5b-a4a3-1bfcec4dc276
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265332962952547212, guid: bb35b4930df61814698dbf290f4641e6, type: 3}
+      propertyPath: itemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6982c545e3ac95c4fac4f972969a2821, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

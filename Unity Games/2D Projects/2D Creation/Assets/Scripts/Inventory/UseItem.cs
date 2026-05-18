@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class UseItem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void GiveToNPC(ItemScriptableObject itemSO, int quantity)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //if specific npc asked for this item give them to them
     }
 }

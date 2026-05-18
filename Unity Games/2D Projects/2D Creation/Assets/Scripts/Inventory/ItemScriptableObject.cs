@@ -1,6 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item")]
+/* Represents a configurable item definition for use in the game, including display information and item properties.
+Code inspired by and sourced by Night Run Studio https://www.youtube.com/playlist?list=PLSR2vNOypvs7sV_ks7h42F7hZ7DmGJqU6 */
 public class ItemScriptableObject : ScriptableObject
 {
     public string itemName;
@@ -8,4 +9,5 @@ public class ItemScriptableObject : ScriptableObject
     public Sprite icon;
     public bool isFood;
     public bool isWater;
+    public int stackSize = 40;
 }
