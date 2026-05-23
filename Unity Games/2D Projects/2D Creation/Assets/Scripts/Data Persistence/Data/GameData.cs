@@ -31,9 +31,11 @@ public class GameData
         playerPosition = Vector3.zero;
         checkPointsCrossed = new SerializableDictionary<string, bool>();
         itemsCollected = new SerializableDictionary<string, bool>();
-        this.slot = new InventorySlot();
-        this.slot.itemSO = null;
-        this.slot.quantity = 0;
+        this.slot = new InventorySlot
+        {
+            itemSO = null,
+            quantity = 0
+        };
         this.auraScale = new Vector3(0, 0, 0);
     }
 
