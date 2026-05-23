@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b4155ce96d3a943a4f26b4c4fdf950, type: 3}
   m_Name: Elder #1
   m_EditorClassIdentifier: Assembly-CSharp::ActorSO
-  actorName: Malume
+  actorName: Maufa

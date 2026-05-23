@@ -23,3 +23,8 @@ MonoBehaviour:
     text: Go see Malume she has a request for you.
   - speaker: {fileID: 11400000, guid: 7c194a158cc2173458542d9746ded9ad, type: 2}
     text: Ok will do!
+  options:
+  - nextDialogue: {fileID: 11400000, guid: eb18802553dda614b94d492e26fd325d, type: 2}
+    optionText: where is She
+  - nextDialogue: {fileID: 0}
+    optionText: Will Do.

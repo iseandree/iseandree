@@ -1,7 +1,8 @@
 using System;
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 
@@ -20,6 +21,7 @@ public class NPCAI : MonoBehaviour
     [SerializeField] private float circleCastRadius = 2.0f;
     [SerializeField] private bool hasQuest = false;
     [SerializeField] private bool hasReasonToTalk = false;
+    [SerializeField] private DialogueSO dialogueSO;
 
 
 
@@ -64,12 +66,24 @@ public class NPCAI : MonoBehaviour
 
         if(hasQuest || hasReasonToTalk)
         {
-            if (DetectPlayer() && !isTalking)
+            if (DetectPlayer())
             {
                 isWalking = false;
-                isTalking = true;
                 rb.linearVelocity = Vector2.zero;
                 interactAnim.Play("Open Icon");
+            }
+
+            if (player != null)
+            {
+                PlayerInput playerInput = player.GetComponent<PlayerInput>();
+                if (playerInput != null && playerInput.actions != null)
+                {
+                    InputAction interactAction = playerInput.actions.FindAction("Interact");
+                    if (interactAction != null && interactAction.WasPressedThisFrame())
+                    {
+                            DialogueManager.Instance.StartDialogue(dialogueSO);
+                    }
+                }
             }
         }
     }
