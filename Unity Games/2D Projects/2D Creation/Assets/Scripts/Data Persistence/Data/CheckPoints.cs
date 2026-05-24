@@ -12,6 +12,15 @@ public class CheckPoints : MonoBehaviour, IDataPersistence
 
     public bool isCrossed = false;
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            isCrossed = true;
+            DataPersistenceManager.Instance.SaveGame();
+        }
+    }
+
     // Updates the specified <see cref="GameData"/> instance to reflect the current collection state of this item.
     public void SaveData(ref GameData data)
     {
