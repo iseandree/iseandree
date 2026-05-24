@@ -43,6 +43,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private LayerMask groundLayer;
     private LayerMask borderLayer;
     private GameObject interactable;
+    private CheckPoints checkPoints;
 
     // Private Variables - Game Mechanics
     private Vector3 auraPoints;
@@ -70,6 +71,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
 
         // Initialize Game Mechanic related Variables
         auraPoints = new Vector3(0 , 0, 0);
+        checkPoints = FindAnyObjectByType<CheckPoints>();
     }
 
     // Update is called once per frame
@@ -278,6 +280,15 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         return true;
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("CheckPoint"))
+        {
+            DataPersistenceManager.Instance.SaveGame();
+            checkPoints.isCrossed = true;
+        }
+    }
 
     private void OnDrawGizmos()
     {

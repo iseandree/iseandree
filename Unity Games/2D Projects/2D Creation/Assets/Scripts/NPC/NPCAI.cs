@@ -21,7 +21,10 @@ public class NPCAI : MonoBehaviour
     [SerializeField] private float circleCastRadius = 2.0f;
     [SerializeField] private bool hasQuest = false;
     [SerializeField] private bool hasReasonToTalk = false;
-    [SerializeField] private DialogueSO dialogueSO;
+    [SerializeField] private DialogueSO currentConversation;
+    [SerializeField] private List<DialogueSO> conversations;
+
+
 
 
 
@@ -81,9 +84,30 @@ public class NPCAI : MonoBehaviour
                     InputAction interactAction = playerInput.actions.FindAction("Interact");
                     if (interactAction != null && interactAction.WasPressedThisFrame())
                     {
-                            DialogueManager.Instance.StartDialogue(dialogueSO);
+                        if(DialogueManager.Instance.isDialogueActive)
+                        {
+                            DialogueManager.Instance.AdvanceDialogue();
+                        }
+                        else
+                        {
+                            CheckForNewConversation();
+                            DialogueManager.Instance.StartDialogue(currentConversation);
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    private void CheckForNewConversation()
+    {
+        for(int i = 0; i < conversations.Count; i++)
+        {
+            var convo = conversations[i];
+            if(convo != null && convo.IsConditionMet())
+            {
+                conversations.RemoveAt(i);
+                currentConversation = convo;
             }
         }
     }

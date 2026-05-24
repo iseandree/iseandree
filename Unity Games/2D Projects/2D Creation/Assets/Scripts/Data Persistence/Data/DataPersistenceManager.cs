@@ -18,16 +18,16 @@ public class DataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
 
-    public static DataPersistenceManager instance { get; private set; }
+    public static DataPersistenceManager Instance { get; private set; }
 
     // Initializes the singleton instance of the component if it has not already been set.
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             return;
         }
-        instance = this;
+        Instance = this;
     }
 
     // Initializes the data persistence system and loads the game state.
@@ -47,12 +47,6 @@ public class DataPersistenceManager : MonoBehaviour
             FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects); // Return a new list and pass the result into list
-    }
-
-    //  Handles application shutdown events to perform necessary cleanup or save operations before the application exits.
-    private void OnApplicationQuit()
-    {
-        SaveGame();
     }
 
     //  Initializes a new game by resetting all game data to their default values.

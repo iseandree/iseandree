@@ -137,6 +137,8 @@ public class DialogueManager : MonoBehaviour
     private void ShowDialogue()
     {
         DialogueLine line = currentDialogue.lines[dialogueIndex];
+        DialogueHistoryTracker.Instance.RecordNPC(line.speaker);
+
         actorName.text = line.speaker.actorName;
         dialogueText.text = line.text;
         dialogueIndex++;
