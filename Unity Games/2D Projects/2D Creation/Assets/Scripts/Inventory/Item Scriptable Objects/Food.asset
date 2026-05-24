@@ -15,5 +15,6 @@ MonoBehaviour:
   itemName: Food
   itemDescription: 'Food for sustenance '
   icon: {fileID: 3625043607559282579, guid: 0605b60ea8bbfd341a9d7c656b529093, type: 3}
-  isForObjective: 1
-  isFood: 0
+  isFood: 1
+  isWater: 0
+  stackSize: 40

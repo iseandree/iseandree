@@ -1429,6 +1429,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525123539}
   m_CullTransparentMesh: 1
+--- !u!1 &563472995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 563472996}
+  - component: {fileID: 563472997}
+  m_Layer: 0
+  m_Name: Inventory Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &563472996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563472995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1328461429}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563472997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563472995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2df6b2c4e07ce4e901a7d316dfa377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  itemSlots:
+  - {fileID: 1567571627}
+  useItem: {fileID: 0}
+  food: 0
+  water: 0
+  waterText: {fileID: 0}
+  foodText: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2707,7 @@ Transform:
   m_Children:
   - {fileID: 1722121343}
   - {fileID: 356927722}
+  - {fileID: 563472996}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1334181843
@@ -3003,6 +3055,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2356535630744228931, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
   m_PrefabInstance: {fileID: 1547315800}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1567571626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567571628}
+  - component: {fileID: 1567571627}
+  m_Layer: 0
+  m_Name: inventory slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1567571627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567571626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4058483824908374c820ce5ea4ddc5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemSO: {fileID: 0}
+  quantity: 0
+  itemImage: {fileID: 0}
+  inventoryManager: {fileID: 0}
+  quantityText: {fileID: 0}
+--- !u!4 &1567571628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567571626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 308.6038, y: -70.63055, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1620387697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   difficultySelected: 0
+  dialogueManager: {fileID: 428157242}
+  dialogueHistoryTracker: {fileID: 428157243}
   timeStamps:
   - timeRatio: 0
     color: {r: 1, g: 1, b: 1, a: 0}
@@ -3998,27 +4101,43 @@ PrefabInstance:
       value: Elder Maufa
       objectReference: {fileID: 0}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
+      propertyPath: hasQuest
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: dialogueSO
       value: 
       objectReference: {fileID: 11400000, guid: a5f5725b4d6a1094f82cffef8f253eec, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
+      propertyPath: hasReasonToTalk
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: conversations.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 777a3931f77f56b44b4fbcd998311557, type: 2}
+      objectReference: {fileID: 11400000, guid: b59fda387eae02b4ca45e0638a2a11e9, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 08b66b1ac4650c141b5d6a92fe122664, type: 2}
+      objectReference: {fileID: 11400000, guid: a75ad659092196346a90a6a57d6fb218, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: e2443e0d245d07a43a08b0002349e15b, type: 2}
+      objectReference: {fileID: 11400000, guid: 777a3931f77f56b44b4fbcd998311557, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 08b66b1ac4650c141b5d6a92fe122664, type: 2}
+    - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
+      propertyPath: 'conversations.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e2443e0d245d07a43a08b0002349e15b, type: 2}
+    - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
+      propertyPath: 'conversations.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: bedb59c59f46a2347a7a6aecf2298ab1, type: 2}
     m_RemovedComponents: []
@@ -4043,3 +4162,4 @@ SceneRoots:
   - {fileID: 3539969479941135813}
   - {fileID: 428157240}
   - {fileID: 18846730}
+  - {fileID: 1567571628}

@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 // Day/Night Cycle Referenced by Mina Pêcheux from https://medium.com/codex/creating-a-basic-day-and-night-cycle-in-unity-c-dff942c1690d
 public class GameManager : MonoBehaviour, IDataPersistence
 {
+    
     [System.Serializable]
     public struct DayAndNightTimeStamp
     {
@@ -17,7 +18,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public enum DifficultySettings { Easy, Normal, Hard };
     [SerializeField] public DifficultySettings difficultySelected;
 
-    public static GameManager Instance; // Singleton instance
+    public static GameManager Instance;
+    public DialogueManager dialogueManager;
+    public DialogueHistoryTracker dialogueHistoryTracker;
 
     // SerializeField - Day/Night
     [SerializeField] DayAndNightTimeStamp[] timeStamps;

@@ -24,10 +24,6 @@ public class NPCAI : MonoBehaviour
     [SerializeField] private DialogueSO currentConversation;
     [SerializeField] private List<DialogueSO> conversations;
 
-
-
-
-
     // Private Variables
     private Rigidbody2D rb;
     private int facingDirection = -1;
@@ -51,63 +47,106 @@ public class NPCAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= randomTime)
-        {
-            StateChange();
-        }
-        if (!isFlipping && (transform.position.x < leftPatrolX || transform.position.x > rightPatrolX))
-        {
-            StartCoroutine(Flip());
-        }
+        bool isPlayerNearby = (hasQuest || hasReasonToTalk) && DetectPlayer();
 
-        if (isWalking)
+        if (isTalking && !GameManager.Instance.dialogueManager.isDialogueActive)
         {
-            rb.linearVelocity = Vector2.right * facingDirection * moveSpeed;
+            isTalking = false;
         }
-        animator.SetBool("isWalking", isWalking);
-
-        if(hasQuest || hasReasonToTalk)
+        
+        if (isTalking || isPlayerNearby)
         {
-            if (DetectPlayer())
+            isWalking = false;
+            rb.linearVelocity = Vector2.zero;
+            if(isPlayerNearby)
+            { 
+                interactAnim.Play("Open Icon"); 
+            }
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            if (timer >= randomTime)
             {
-                isWalking = false;
-                rb.linearVelocity = Vector2.zero;
-                interactAnim.Play("Open Icon");
+                StateChange();
+            }
+            if (!isFlipping && (transform.position.x < leftPatrolX || transform.position.x > rightPatrolX))
+            {
+                StartCoroutine(Flip());
             }
 
-            if (player != null)
+            if (isWalking)
             {
-                PlayerInput playerInput = player.GetComponent<PlayerInput>();
-                if (playerInput != null && playerInput.actions != null)
+                rb.linearVelocity = Vector2.right * facingDirection * moveSpeed;
+            }
+            else
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
+        }
+
+        if ((hasQuest || hasReasonToTalk) && player != null)
+        {
+            PlayerInput playerInput = player.GetComponent<PlayerInput>();
+            if (playerInput != null && playerInput.actions != null)
+            {
+                InputAction interactAction = playerInput.actions.FindAction("Interact");
+                if (interactAction != null && interactAction.WasPressedThisFrame())
                 {
-                    InputAction interactAction = playerInput.actions.FindAction("Interact");
-                    if (interactAction != null && interactAction.WasPressedThisFrame())
+                    Debug.Log("[NPC] Interact button pressed!");
+                    if (GameManager.Instance.dialogueManager.isDialogueActive)
                     {
-                        if(DialogueManager.Instance.isDialogueActive)
+                        Debug.Log("[NPC] Dialogue is active, advancing...");
+                        GameManager.Instance.dialogueManager.AdvanceDialogue();
+                    }
+                    else
+                    {
+                        if (GameManager.Instance.dialogueManager.CanStartDialogue())
                         {
-                            DialogueManager.Instance.AdvanceDialogue();
-                        }
-                        else
-                        {
+                            Debug.Log("[NPC] Starting a fresh conversation...");
                             CheckForNewConversation();
-                            DialogueManager.Instance.StartDialogue(currentConversation);
+                            Debug.Log($"[NPC] Current Conversation Asset: {currentConversation?.name}");
+                            GameManager.Instance.dialogueManager.StartDialogue(currentConversation);
+
+                            // Lock the NPC into the talking state
+                            isTalking = true;
+                            isWalking = false;
+                            rb.linearVelocity = Vector2.zero;
                         }
                     }
                 }
             }
         }
+
+        animator.SetBool("isWalking", isWalking);
     }
 
     private void CheckForNewConversation()
     {
-        for(int i = 0; i < conversations.Count; i++)
+        for (int i = 0; i < conversations.Count; i++)
         {
             var convo = conversations[i];
-            if(convo != null && convo.IsConditionMet())
+            if (convo != null && convo.IsConditionMet())
             {
-                conversations.RemoveAt(i);
                 currentConversation = convo;
+                
+                //Remove if its one time only
+                if(convo.removeAfterPlay)
+                {
+                    conversations.RemoveAt(i);
+                }
+                
+                // Remove any other dialogues that should be cleared when this one plays
+                if(convo.removeTheseOnPlay != null && convo.removeTheseOnPlay.Count > 0)
+                {
+                    foreach(var toRemove in convo.removeTheseOnPlay)
+                    {
+                        conversations.Remove(toRemove);
+                    }
+                }
+
+                currentConversation = convo;
+                break;
             }
         }
     }
@@ -144,7 +183,7 @@ public class NPCAI : MonoBehaviour
     /// otherwise, it is set to null.</remarks>
     /// <returns>true if a valid interactable object is detected within range; otherwise, false.</returns>
     private bool DetectPlayer()
-    { 
+    {
         // Get an array of all possible colliders within the range of the NPC
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCastRadius);
 

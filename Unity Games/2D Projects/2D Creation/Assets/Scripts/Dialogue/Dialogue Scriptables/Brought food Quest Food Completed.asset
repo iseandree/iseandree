@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a951c306bc6844c42a5ccc5369e654f1, type: 3}
+  m_Name: Brought food Quest Food Completed
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: f62feed86ab7ddd49912a4dcf6b990ef, type: 2}
+    text: Thanks lil nigga
+  options: []
+  requiredNPCs: []
+  requiredItems:
+  - {fileID: 11400000, guid: 6982c545e3ac95c4fac4f972969a2821, type: 2}
+  removeAfterPlay: 1
+  removeTheseOnPlay:
+  - {fileID: 11400000, guid: b59fda387eae02b4ca45e0638a2a11e9, type: 2}

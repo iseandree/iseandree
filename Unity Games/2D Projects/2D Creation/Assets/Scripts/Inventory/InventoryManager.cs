@@ -8,6 +8,7 @@ using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialias
  Code inspired by and sourced by Night Run Studio https://www.youtube.com/playlist?list=PLSR2vNOypvs7sV_ks7h42F7hZ7DmGJqU6 */
 public class InventoryManager : MonoBehaviour, IDataPersistence
 {
+    public static InventoryManager Instance;
     // Variables - Item related
     public InventorySlot[] itemSlots;
     public UseItem useItem;
@@ -18,6 +19,18 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     public TMP_Text waterText;
     public TMP_Text foodText;
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Subscribes to the item looted event when the component is enabled.
     private void OnEnable()
     {
@@ -47,7 +60,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         if (itemSO.isFood)
         {
             food += quantity;
-            foodText.text = food.ToString();
+            //foodText.text = food.ToString();
             return;
         }
         else if (itemSO.isWater)    // If the item added is water increase the amount of water and update the text
@@ -120,6 +133,33 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         {
             Debug.Log("No item available");
         }
+    }
+
+    public bool HasItem(ItemScriptableObject itemSO)
+    {
+        Debug.Log($"[Inventory Check] NPC is asking for: {itemSO?.itemName}. Current food count: {food}");
+        // If the system is looking for a food item, check the raw integer tracker
+        if (itemSO.isFood && food > 0)
+        {
+            Debug.Log("[Inventory Check] Match found! Returning true.");
+            return true;
+        }
+
+        // If the system is looking for a water item, check the raw integer tracker
+        if (itemSO.isWater && water > 0)
+        {
+            return true;
+        }
+
+        // Otherwise, check the regular physical inventory slots
+        foreach (var slot in itemSlots)
+        {
+            if (slot.itemSO == itemSO && slot.quantity > 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Saves the current item slot data into the specified structure.

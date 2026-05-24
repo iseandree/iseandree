@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
 
     [Header("UI References")]
     public TMP_Text actorName;
@@ -22,17 +21,11 @@ public class DialogueManager : MonoBehaviour
     private DialogueSO currentDialogue;
     private int dialogueIndex;
     private string uiAdvanceActionName = "Submit";
+    private float dialogueCooldown = 0.1f;
+    private float lastDialogueEndTime;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
@@ -57,6 +50,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public bool CanStartDialogue()
+    {
+        return Time.unscaledTime - lastDialogueEndTime < dialogueCooldown;
+    }
     public void StartDialogue(DialogueSO dialogueSO)
     {
         currentDialogue = dialogueSO;
@@ -137,7 +134,7 @@ public class DialogueManager : MonoBehaviour
     private void ShowDialogue()
     {
         DialogueLine line = currentDialogue.lines[dialogueIndex];
-        DialogueHistoryTracker.Instance.RecordNPC(line.speaker);
+        GameManager.Instance.dialogueHistoryTracker.RecordNPC(line.speaker);
 
         actorName.text = line.speaker.actorName;
         dialogueText.text = line.text;
