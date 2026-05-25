@@ -15,30 +15,37 @@ public class DialogueSO : ScriptableObject
     [Header("Control Flags")]
     public bool removeAfterPlay;
     public List<DialogueSO> removeTheseOnPlay;
+
     public bool IsConditionMet()
     {
+        // Check if the player has met the required NPC, if it is not the particular npc return false
         if(requiredNPCs.Length > 0)
         {
             foreach (var npc in requiredNPCs)
             {
                 if(!GameManager.Instance.dialogueHistoryTracker.HasSpokenWith(npc))
                 {
+                    Debug.Log($"[Dialogue Condition] Failed NPC check for {npc.name}. Stopping evaluation.");
                     return false;
-
                 }
             }
         }
 
-        if(requiredItems.Length > 0)
+        Debug.Log($"[Dialogue Condition] NPC requirements passed or empty. Total items to check: {requiredItems.Length}");
+
+        // Check if the player has the required items in their inventory, if they don't have the particular item in their inventory return false
+        if (requiredItems.Length > 0)
         {
             foreach(var item in requiredItems)
             {
                 if(!InventoryManager.Instance.HasItem(item))
                 {
+                    Debug.Log("Checked if has:" + InventoryManager.Instance.HasItem(item) + " " + item);
                     return false;
                 }
             }
         }
+
         return true;
     }
 }

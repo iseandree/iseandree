@@ -9,19 +9,13 @@ using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialias
 public class InventoryManager : MonoBehaviour, IDataPersistence
 {
     public static InventoryManager Instance;
+
     // Variables - Item related
     public InventorySlot[] itemSlots;
-    public UseItem useItem;
-    public int food;
-    public int water;
-
-    // Variables - UI related
-    public TMP_Text waterText;
-    public TMP_Text foodText;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -31,6 +25,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             Destroy(gameObject);
         }
     }
+
     // Subscribes to the item looted event when the component is enabled.
     private void OnEnable()
     {
@@ -56,20 +51,6 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     // in an empty slot.
     private void AddItem(ItemScriptableObject itemSO, int quantity)
     {
-        // If the item added is food increase the amount of food and update the text
-        if (itemSO.isFood)
-        {
-            food += quantity;
-            //foodText.text = food.ToString();
-            return;
-        }
-        else if (itemSO.isWater)    // If the item added is water increase the amount of water and update the text
-        {
-            water += quantity;
-            waterText.text = water.ToString();
-            return;
-        }
-
         // Stack if it is the same item and there is room to do so
         foreach (var slot in itemSlots)
         {
@@ -116,40 +97,31 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     // Attempts to use the item in the specified inventory slot, decrementing its quantity and updating the slot state.
     public void UseItem(InventorySlot slot)
     {
-        // If the slot item is not empty and there are more than 0 then give them to the NPC
-        if (slot.itemSO != null && slot.quantity >= 0)
+        if (HasItem(slot.itemSO))
         {
-            Debug.Log("Trying to use item: " + slot.itemSO.itemName);
-            useItem.GiveToNPC(slot.itemSO, slot.quantity);
-            slot.quantity--;
-
-            if (slot.quantity <= 0)
+            // If the slot item is not empty and there are more than 0 then give them to the NPC
+            if (slot.itemSO != null && slot.quantity >= 0)
             {
-                slot.itemSO = null;
+                Debug.Log("Trying to use item: " + slot.itemSO.itemName);
+                slot.quantity--;
+
+                if (slot.quantity <= 0)
+                {
+                    slot.itemSO = null;
+                }
+                slot.UpdateUI();
             }
-            slot.UpdateUI();
-        }
-        else
-        {
-            Debug.Log("No item available");
+            else
+            {
+                Debug.Log("No item available");
+            }
         }
     }
 
     public bool HasItem(ItemScriptableObject itemSO)
     {
-        Debug.Log($"[Inventory Check] NPC is asking for: {itemSO?.itemName}. Current food count: {food}");
+        Debug.Log($"[Inventory Check] NPC is asking for: {itemSO.itemName}.");
         // If the system is looking for a food item, check the raw integer tracker
-        if (itemSO.isFood && food > 0)
-        {
-            Debug.Log("[Inventory Check] Match found! Returning true.");
-            return true;
-        }
-
-        // If the system is looking for a water item, check the raw integer tracker
-        if (itemSO.isWater && water > 0)
-        {
-            return true;
-        }
 
         // Otherwise, check the regular physical inventory slots
         foreach (var slot in itemSlots)

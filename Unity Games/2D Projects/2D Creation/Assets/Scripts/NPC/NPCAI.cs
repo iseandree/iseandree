@@ -123,15 +123,16 @@ public class NPCAI : MonoBehaviour
 
     private void CheckForNewConversation()
     {
+        Debug.Log($"[NPC Debug] Checking conversations. Total count available: {conversations.Count}");
         for (int i = 0; i < conversations.Count; i++)
         {
             var convo = conversations[i];
             if (convo != null && convo.IsConditionMet())
             {
                 currentConversation = convo;
-                
+                Debug.Log($"[NPC Debug] Evaluating conditions for: {convo.name}");
                 //Remove if its one time only
-                if(convo.removeAfterPlay)
+                if (convo.removeAfterPlay)
                 {
                     conversations.RemoveAt(i);
                 }
@@ -147,6 +148,10 @@ public class NPCAI : MonoBehaviour
 
                 currentConversation = convo;
                 break;
+            }
+            else
+            {
+                Debug.LogWarning($"[NPC Debug] Slot {i} in conversations list is null!");
             }
         }
     }

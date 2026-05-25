@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d401c58160096e248965fe38f95248cb, type: 3}
-  m_Name: Food
+  m_Name: Water
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
-  itemName: Food
-  itemDescription: 'Food for sustenance '
-  icon: {fileID: 3625043607559282579, guid: 324143641a9eb9f44b18ec57ea3b05ea, type: 3}
-  isFood: 1
+  itemName: Water
+  itemDescription: Good liquid sustenance
+  icon: {fileID: -9095717837082945937, guid: 034e7bf7b39b2f94285ae558310cf7b0, type: 3}
+  isFood: 0
   isWater: 0
   stackSize: 40

@@ -20,8 +20,7 @@ public class GameData
     public SerializableDictionary<string, bool> itemsCollected;
     public InventorySlot slot;
     public Vector3 auraScale;
-
-    
+ 
     public GameData()
     {
         this.gameDifficulty = DifficultySettings.Normal;

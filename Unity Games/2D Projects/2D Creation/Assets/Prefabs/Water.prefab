@@ -27,8 +27,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7014041656681708515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -81,12 +81,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 0605b60ea8bbfd341a9d7c656b529093, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: 034e7bf7b39b2f94285ae558310cf7b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 2068915234434629917}
   - component: {fileID: 7265332962952547212}
   m_Layer: 0
-  m_Name: Food Prefab
+  m_Name: Water
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.467, y: -1.48444, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 877200980295220934}
   m_Father: {fileID: 0}
@@ -173,6 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd56dbb34179ef4cb63d0db51f46982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Items
-  itemSO: {fileID: 0}
+  iD: 
+  itemSO: {fileID: 11400000, guid: 7e7999956e39f8f40b4f3facde362691, type: 2}
   spriteRenderer: {fileID: 4157050063704021473}
   quantity: 1
+  isCollected: 0

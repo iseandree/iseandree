@@ -10,14 +10,7 @@ public class InventorySlot : MonoBehaviour
     public ItemScriptableObject itemSO;
     public int quantity;
     public Image itemImage;
-    public InventoryManager inventoryManager;
     public TMP_Text quantityText;
-
-    // Initialize the inventoryManager variable for later use
-    private void Start()
-    {
-        inventoryManager = GetComponentInParent<InventoryManager>();
-    }
 
     // Update the UI for the Inventory slot in game 
     public void UpdateUI()

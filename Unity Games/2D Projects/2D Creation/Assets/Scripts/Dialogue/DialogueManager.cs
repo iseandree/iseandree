@@ -13,14 +13,16 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text actorName;
     public TMP_Text dialogueText;
     public Button[] choiceButtons;
-    public bool isDialogueActive;
-    public bool isDialogueCompleted;
-    private bool areChoicesShowing = false;
-    [SerializeField] private PlayerInput playerInput;
     public CanvasGroup canvasGroup;
+    [SerializeField] private PlayerInput playerInput;
+    private string uiAdvanceActionName = "Submit";
+
+    public bool isDialogueActive;
+    private bool areChoicesShowing = false;
+
     private DialogueSO currentDialogue;
     private int dialogueIndex;
-    private string uiAdvanceActionName = "Submit";
+
     private float dialogueCooldown = 0.1f;
     private float lastDialogueEndTime;
 
@@ -52,8 +54,9 @@ public class DialogueManager : MonoBehaviour
 
     public bool CanStartDialogue()
     {
-        return Time.unscaledTime - lastDialogueEndTime < dialogueCooldown;
+        return Time.unscaledTime - lastDialogueEndTime >= dialogueCooldown;
     }
+
     public void StartDialogue(DialogueSO dialogueSO)
     {
         currentDialogue = dialogueSO;
@@ -122,7 +125,6 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIndex = 0;
         isDialogueActive = false;
-        isDialogueCompleted = true;
         areChoicesShowing = false;
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;

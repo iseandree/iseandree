@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
   itemName: Flower
   itemDescription: Pretty flower for a pretty person
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  isForObjective: 0
+  icon: {fileID: -712631045867808456, guid: f529030511aa3aa4689885c996baab4e, type: 3}
   isFood: 0
-  auraPoints: 2
+  isWater: 0
+  stackSize: 40
