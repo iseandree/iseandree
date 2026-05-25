@@ -28,6 +28,7 @@ public class ObjectiveManager : MonoBehaviour, IDataPersistence
 
         progressDictionary[questObjective] = newAmount;
     }
+
     public string GetProgressText(ObjectiveSO objectiveSO, QuestObjective questObjective)
     {
         int currentAmount = GetCurrentAmount(objectiveSO, questObjective);
@@ -63,6 +64,7 @@ public class ObjectiveManager : MonoBehaviour, IDataPersistence
     {
 
     }
+
     public void LoadData(GameData gameData)
     {
 
