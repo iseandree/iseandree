@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe12f4de36c68944eab93f000803d225, type: 3}
+  m_Name: Quest - Fetch Food
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectiveSO
+  objectiveName: Fetch food
+  objectiveDescription: Get enough food for everyone
+  objectivePriority: High
+  objectives:
+  - description: Collect Food
+    target: {fileID: 11400000, guid: 6982c545e3ac95c4fac4f972969a2821, type: 2}
+    requiredAmount: 3
+    currentAmount: 0
+  - description: collect water
+    target: {fileID: 11400000, guid: 7e7999956e39f8f40b4f3facde362691, type: 2}
+    requiredAmount: 3
+    currentAmount: 0
+  - description: return home to malume
+    target: {fileID: 11400000, guid: 1cc5447a23310504085c6c590d4bb566, type: 2}
+    requiredAmount: 1
+    currentAmount: 0
+  increaseAuraScale: 0.5

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     // Variables
-    public ItemScriptableObject itemSO;
+    public ItemSO itemSO;
     public int quantity;
     public Image itemImage;
     public TMP_Text quantityText;

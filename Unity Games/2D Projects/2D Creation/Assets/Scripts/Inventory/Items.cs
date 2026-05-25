@@ -14,11 +14,11 @@ public class Items : MonoBehaviour, IDataPersistence
     }
 
     // Variables - What is an item
-    public ItemScriptableObject itemSO;
+    public ItemSO itemSO;
     public SpriteRenderer spriteRenderer;
     public int quantity;
     public bool isCollected;
-    public static event Action<ItemScriptableObject, int> OnItemLooted;
+    public static event Action<ItemSO, int> OnItemLooted;
 
     // Performs validation logic when the component's properties are changed in the editor.
     private void OnValidate()

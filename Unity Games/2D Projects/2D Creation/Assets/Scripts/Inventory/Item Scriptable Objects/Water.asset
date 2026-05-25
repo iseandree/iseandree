@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d401c58160096e248965fe38f95248cb, type: 3}
+  m_Script: {fileID: 11500000, guid: ac74680dcea2f614288b1c22310c17fc, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
   itemName: Water
-  itemDescription: Good liquid sustenance
+  itemDescription: Liquid nourishment
   icon: {fileID: -9095717837082945937, guid: 034e7bf7b39b2f94285ae558310cf7b0, type: 3}
-  isFood: 0
-  isWater: 0
   stackSize: 40

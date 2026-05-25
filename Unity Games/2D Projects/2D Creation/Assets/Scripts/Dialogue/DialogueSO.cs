@@ -10,7 +10,7 @@ public class DialogueSO : ScriptableObject
 
     [Header("Conditional Rquirements (Optional)")]
     public ActorSO[] requiredNPCs;
-    public ItemScriptableObject[] requiredItems;
+    public ItemSO[] requiredItems;
 
     [Header("Control Flags")]
     public bool removeAfterPlay;

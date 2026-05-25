@@ -49,7 +49,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     // Adds the specified quantity of an item to the inventory, stacking with existing items when possible or placing
     // in an empty slot.
-    private void AddItem(ItemScriptableObject itemSO, int quantity)
+    private void AddItem(ItemSO itemSO, int quantity)
     {
         // Stack if it is the same item and there is room to do so
         foreach (var slot in itemSlots)
@@ -89,7 +89,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     }
 
     // Removes the specified item from the inventory and just deletes it from the game world.
-    private void DropItem(ItemScriptableObject itemSO, int quantity)
+    private void DropItem(ItemSO itemSO, int quantity)
     {
         Debug.Log("inventory is full");
     }
@@ -118,7 +118,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public bool HasItem(ItemScriptableObject itemSO)
+    public bool HasItem(ItemSO itemSO)
     {
         Debug.Log($"[Inventory Check] NPC is asking for: {itemSO.itemName}.");
         // If the system is looking for a food item, check the raw integer tracker
@@ -132,6 +132,20 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             }
         }
         return false;
+    }
+
+    public int GetItemQuantity(ItemSO itemSO)
+    {
+        int total = 0;
+
+        foreach(var slot in itemSlots)
+        {
+            if(slot.itemSO = itemSO)
+            {
+                total += slot.quantity;
+            }
+        }
+        return total;
     }
 
     // Saves the current item slot data into the specified structure.

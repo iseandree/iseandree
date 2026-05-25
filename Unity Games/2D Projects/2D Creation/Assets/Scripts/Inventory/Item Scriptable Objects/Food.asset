@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d401c58160096e248965fe38f95248cb, type: 3}
+  m_Script: {fileID: 11500000, guid: ac74680dcea2f614288b1c22310c17fc, type: 3}
   m_Name: Food
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
   itemName: Food
-  itemDescription: 'Food for sustenance '
+  itemDescription: 'Food '
   icon: {fileID: 3625043607559282579, guid: 324143641a9eb9f44b18ec57ea3b05ea, type: 3}
-  isFood: 1
-  isWater: 0
   stackSize: 40
