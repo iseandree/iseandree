@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,36 +11,113 @@ public class ObjectiveLogUI : MonoBehaviour
 {
     [Header("Setup References")]
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup objectiveCanvasGroup;
+    [SerializeField] private CanvasGroup acceptCanvasGroup;
+    [SerializeField] private CanvasGroup declineCanvasGroup;
+    [SerializeField] private CanvasGroup completeCanvasGroup;
+    [SerializeField] private TMP_Text objectiveNameText;
+    [SerializeField] private TMP_Text objectiveDescriptionText;
 
+    [SerializeField] private ObjectiveSO noAvailableObjectiveSO;
+    
     [Header("Log Data")]
     [SerializeField] private ObjectiveLogSlot[] objectiveLogSlots;
     [SerializeField] private QuestObjectiveSlot[] questObjectiveSlots;
+    [SerializeField] private ObjectiveRewardSlot[] objectiveRewardSlots;
     [SerializeField] private ObjectiveManager objectiveManager;
-    [SerializeField] private TMP_Text objectiveNameText;
-    [SerializeField] private TMP_Text objectiveDescriptionText;
+
+
     private ObjectiveSO objectiveSO;
 
-    private void Start()
+    private void OnEnable()
     {
-        OpenObjectiveLog();
+        ObjectiveEvents.OnObjectiveOfferRequested += ShowObjectiveOffer;    
+        ObjectiveEvents.OnObjectiveTurnInRequested += ShowObjectiveTurnIn;    
+    }
+    private void OnDisable()
+    {
+        ObjectiveEvents.OnObjectiveOfferRequested -= ShowObjectiveOffer;
+        ObjectiveEvents.OnObjectiveTurnInRequested -= ShowObjectiveTurnIn;
     }
 
-    public void OpenObjectiveLog()
+
+    // Only doing this because of the video but there will be no board to get quests from 
+    public void ShowObjectiveOffer(ObjectiveSO incomingObjectiveSO)
     {
-        canvasGroup.alpha = 1;
-        canvasGroup.blocksRaycasts = true;
-        canvasGroup.interactable = true;
+        SwitchToUIMap();
+        StartCoroutine(FocusFirstSlot());
+
+        objectiveSO = incomingObjectiveSO;
+
+        if (objectiveManager.IsObjectiveAccepted(incomingObjectiveSO) || objectiveManager.GetCompletedObjectives(incomingObjectiveSO))
+        {
+            SetCanvasState(acceptCanvasGroup, false);
+            SetCanvasState(declineCanvasGroup, true);
+            SetCanvasState(completeCanvasGroup, false);
+        }
+        else
+        {
+            SetCanvasState(acceptCanvasGroup, true);
+            SetCanvasState(declineCanvasGroup, true);
+            SetCanvasState(completeCanvasGroup, false);
+        }
+        HandleQuestSelected(objectiveSO);
+        SetCanvasState(objectiveCanvasGroup, true);
+    }
+
+    public void ShowObjectiveTurnIn(ObjectiveSO incomingObjectiveSO)
+    {
+        objectiveSO = incomingObjectiveSO;
+        HandleQuestSelected(objectiveSO);
+        SetCanvasState(completeCanvasGroup, true);
+        SetCanvasState(acceptCanvasGroup, false);
+        SetCanvasState(declineCanvasGroup, false);
+        SetCanvasState(objectiveCanvasGroup, true);
         SwitchToUIMap();
         StartCoroutine(FocusFirstSlot());
     }
 
-    public void CloseObjectiveLog()
+    public void OnAcceptObjectiveSelected()
     {
-        canvasGroup.alpha = 0;
-        canvasGroup.blocksRaycasts = false;
-        canvasGroup.interactable = false;
+        objectiveManager.AcceptObjective(objectiveSO);
+
+        SetCanvasState(completeCanvasGroup, false);
+        SetCanvasState(acceptCanvasGroup, false);
+        SetCanvasState(declineCanvasGroup, false);
+        RefreshObjectiveList();
+        HandleQuestSelected(noAvailableObjectiveSO);
+
+    }
+
+    public void OnDeclineObjectiveSelected()
+    {
+        SetCanvasState(objectiveCanvasGroup, false);
         SwitchToPlayerMap();
+    }
+
+    public void OnCompleteObjectiveClicked()
+    {
+        objectiveManager.CompleteObjective(objectiveSO);
+        RefreshObjectiveList();
+        HandleQuestSelected(noAvailableObjectiveSO);
+        SetCanvasState(completeCanvasGroup, false);
+    }
+
+    public void RefreshObjectiveList()
+    {
+        List<ObjectiveSO> activeObjectives = objectiveManager.GetActiveObjectives();
+
+        for (int i = 0; i < objectiveLogSlots.Length; i++)
+        {
+            if(i < activeObjectives.Count)
+            {
+                objectiveLogSlots[i].SetObjective(activeObjectives[i]);
+            }
+            else
+            {
+                objectiveLogSlots[i].ClearSlot();
+            }
+        }
     }
 
     public void HandleQuestSelected(ObjectiveSO objectiveSO)
@@ -49,11 +128,7 @@ public class ObjectiveLogUI : MonoBehaviour
         objectiveDescriptionText.text = objectiveSO.objectiveDescription;
 
         DisplayObjective();
-        foreach (var objective in objectiveSO.objectives)
-        {
-            
-            Debug.Log($"Objective: {objective.description}");
-        }
+        DisplayRewards();
     }
 
     private void DisplayObjective()
@@ -108,5 +183,29 @@ public class ObjectiveLogUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+    }
+
+    private void DisplayRewards()
+    {
+        for (int i = 0; i < objectiveRewardSlots.Length; i++)
+        {
+            if (i < objectiveSO.rewards.Count)
+            {
+                var reward = objectiveSO.rewards[i];
+                objectiveRewardSlots[i].DisplayReward(reward.itemSO.icon, reward.quantity);
+                objectiveRewardSlots[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                objectiveRewardSlots[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void SetCanvasState(CanvasGroup group, bool activate)
+    {
+        group.alpha = activate ? 1 : 0;
+        group.blocksRaycasts = activate;
+        group.interactable = activate;
     }
 }

@@ -9,4 +9,5 @@ public class ItemSO : ScriptableObject
     public string itemDescription;
     public Sprite icon;
     public int stackSize = 40;
+    public bool isAura;
 }

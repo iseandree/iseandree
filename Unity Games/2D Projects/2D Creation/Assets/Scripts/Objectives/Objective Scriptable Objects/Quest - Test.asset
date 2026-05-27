@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe12f4de36c68944eab93f000803d225, type: 3}
-  m_Name: Quest - Fetch Food
+  m_Name: Quest - Test
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveSO
-  objectiveName: Fetch food
-  objectiveDescription: Get enough food for everyone
+  objectiveName: Test water
+  objectiveDescription: Get enough fasdfsadf
   objectivePriority: High
   objectives:
-  - description: Collect Food
-    target: {fileID: 11400000, guid: 6982c545e3ac95c4fac4f972969a2821, type: 2}
+  - description: collect water
+    target: {fileID: 11400000, guid: 7e7999956e39f8f40b4f3facde362691, type: 2}
     requiredAmount: 3
   rewards:
+  - itemSO: {fileID: 11400000, guid: 6982c545e3ac95c4fac4f972969a2821, type: 2}
+    quantity: 5
+    auraScale: 0
   - itemSO: {fileID: 11400000, guid: 22453c74410b30540b44c5dd8e56f772, type: 2}
     quantity: 0
-    auraScale: 0.1
+    auraScale: 10
   - itemSO: {fileID: 11400000, guid: 7e7999956e39f8f40b4f3facde362691, type: 2}
-    quantity: 10
+    quantity: 5
     auraScale: 0

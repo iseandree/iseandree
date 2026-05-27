@@ -11,7 +11,7 @@ public class ObjectiveSO : ScriptableObject
     public List<QuestObjective> objectives;
 
     [Header("Rewards")]
-    public float increaseAuraScale;
+    public List<ObjectiveReward> rewards;
 }
 
 [System.Serializable]
@@ -23,4 +23,16 @@ public class QuestObjective
     public ActorSO targetNPC => target as ActorSO;
 
     public int requiredAmount;
+}
+
+[System.Serializable]
+public class ObjectiveReward
+{
+    // Can be rewarded in cooked meat or prepped veggies which would be used to deliver to the other clan.
+    public ItemSO itemSO;
+    public int quantity;
+
+    //Can be rewared in aura to increase scale
+    public float auraScale;
+
 }

@@ -12,6 +12,8 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     // Variables - Item related
     public InventorySlot[] itemSlots;
+    public float aura;
+    public static event Action<float> OnAuraIncreased;
 
     private void Awake()
     {
@@ -49,8 +51,14 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     // Adds the specified quantity of an item to the inventory, stacking with existing items when possible or placing
     // in an empty slot.
-    private void AddItem(ItemSO itemSO, int quantity)
+    public void AddItem(ItemSO itemSO, int quantity)
     {
+        if(itemSO.isAura)
+        {
+            aura = quantity;
+            return;
+        }
+
         // Stack if it is the same item and there is room to do so
         foreach (var slot in itemSlots)
         {
@@ -134,13 +142,19 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         return false;
     }
 
+    // Add this new public method
+    public void ChangeAuraScale(float amount)
+    {
+        // Because we are inside InventoryManager, we are allowed to Invoke the event!
+        OnAuraIncreased?.Invoke(amount);
+    }
     public int GetItemQuantity(ItemSO itemSO)
     {
         int total = 0;
 
         foreach(var slot in itemSlots)
         {
-            if(slot.itemSO = itemSO)
+            if(slot.itemSO == itemSO)
             {
                 total += slot.quantity;
             }

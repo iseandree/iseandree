@@ -10,18 +10,6 @@ public class ObjectiveLogSlot : MonoBehaviour
     public ObjectiveSO currentObjective;
     public ObjectiveLogUI objectiveLogUI;
 
-    private void OnValidate()
-    {
-        if(currentObjective != null)
-        {
-            SetObjective(currentObjective);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
     public void SetObjective(ObjectiveSO objectiveSO)
     {
         currentObjective = objectiveSO;
@@ -29,6 +17,12 @@ public class ObjectiveLogSlot : MonoBehaviour
         objectiveNameText.text = objectiveSO.objectiveName;
         objectivePriorityText.text = objectiveSO.objectivePriority;
         gameObject.SetActive(true);
+    }
+    
+    public void ClearSlot()
+    {
+        currentObjective = null;
+        gameObject.SetActive(false);
     }
 
     public void OnSlotSelected()

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class PlayerController2D : MonoBehaviour, IDataPersistence
 {
@@ -37,6 +38,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private InputAction jumpAction;
     private InputAction runAction;
     private InputAction interactAction;
+    private InputAction openObjectiveAction;
 
     // Private Variables - Components
     private Rigidbody2D rb;
@@ -45,7 +47,20 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private GameObject interactable;
 
     // Private Variables - Game Mechanics
-    private Vector3 auraPoints;
+    private GameObject aura;
+    private float currentAuraScale = 0.0f;
+    private ObjectiveSO objectiveToOffer;
+
+
+    private void OnEnable()
+    {
+        InventoryManager.OnAuraIncreased += IncreaseAura;    
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.OnAuraIncreased -= IncreaseAura;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,7 +84,16 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         runSpeed = moveSpeed * speedMultiplier;
 
         // Initialize Game Mechanic related Variables
-        auraPoints = new Vector3(0 , 0, 0);
+        aura = GameObject.Find("Aura");
+        if (aura != null)
+        {
+            // Automatically grab whatever size you set in the Inspector layout
+            currentAuraScale = aura.transform.localScale.x;
+        }
+        else
+        {
+            Debug.LogError("[PlayerController] Could not find a GameObject named 'Aura' in the scene!");
+        }
     }
 
     // Update is called once per frame
@@ -276,6 +300,15 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         // Store the game object attached to the ideal Collider to the confirmed interactable and return true for this method. 
         interactable = matchingInteractable.gameObject;
         return true;
+    }
+
+    public void IncreaseAura(float auraAmount)
+    {
+        currentAuraScale += auraAmount;
+        if (aura != null)
+        {
+            aura.transform.localScale = new Vector3(currentAuraScale, currentAuraScale, currentAuraScale);
+        }
     }
 
     private void OnDrawGizmos()
