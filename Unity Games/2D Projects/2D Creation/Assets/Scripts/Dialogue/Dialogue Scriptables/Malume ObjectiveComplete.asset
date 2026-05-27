@@ -10,11 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a951c306bc6844c42a5ccc5369e654f1, type: 3}
-  m_Name: Bring me food Quest Food
+  m_Name: Malume ObjectiveComplete
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
-  - speaker: {fileID: 11400000, guid: f62feed86ab7ddd49912a4dcf6b990ef, type: 2}
-    text: Bring me some food lil nigga
+  - speaker: {fileID: 11400000, guid: 1cc5447a23310504085c6c590d4bb566, type: 2}
+    text: Thank you lil nigga
   options: []
+  offerObjectiveOnEnd: {fileID: 0}
+  requiredCompletedObjectives:
+  - {fileID: 11400000, guid: 07690c4390009fd4bb60b226fd334623, type: 2}
+  turnInObjectiveOnEnd: {fileID: 11400000, guid: 07690c4390009fd4bb60b226fd334623, type: 2}
   requiredNPCs: []
   requiredItems: []
+  removeAfterPlay: 0
+  removeTheseOnPlay: []

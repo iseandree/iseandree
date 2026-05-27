@@ -125,7 +125,31 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             }
         }
     }
+    public void RemoveItem(ItemSO itemSO, int quantity)
+    {
+        for(int i = 0; i< itemSlots.Length; i++)
+        {
+            var slot = itemSlots[i];
+            if(slot.itemSO != itemSO)
+            {
+                continue;
+            }
 
+            if (slot.quantity > quantity)
+            {
+                slot.quantity -= quantity;
+                slot.UpdateUI();
+                quantity = 0;
+            }
+            else
+            {
+                quantity -= slot.quantity;
+                slot.itemSO = null;
+                slot.quantity = 0;
+                slot.UpdateUI();
+            }
+        }
+    }
     public bool HasItem(ItemSO itemSO)
     {
         Debug.Log($"[Inventory Check] NPC is asking for: {itemSO.itemName}.");

@@ -8,6 +8,15 @@ public class DialogueSO : ScriptableObject
     public DialogueLine[] lines;
     public DialogueOption[] options;
 
+    [Header("Objective Offer (Optional)")]
+    public ObjectiveSO offerObjectiveOnEnd;
+
+    [Header("Completed Objective Requirements (Optional)")]
+    public ObjectiveSO[] requiredCompletedObjectives;
+    
+    [Header("Objective Turn-In (Optional)")]
+    public ObjectiveSO turnInObjectiveOnEnd;
+
     [Header("Conditional Rquirements (Optional)")]
     public ActorSO[] requiredNPCs;
     public ItemSO[] requiredItems;
@@ -46,6 +55,17 @@ public class DialogueSO : ScriptableObject
             }
         }
 
+        if(requiredCompletedObjectives != null && requiredCompletedObjectives.Length > 0)
+        {
+            foreach (var objective in requiredCompletedObjectives)
+            {
+                if (!GameManager.Instance.objectiveManager.IsObjectiveComplete(objective))
+                {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }
@@ -61,5 +81,6 @@ public class DialogueLine
 public class DialogueOption
 {
     public DialogueSO nextDialogue;
-    public string optionText;    
+    public string optionText;
+    public ObjectiveSO offerObjective;
 }

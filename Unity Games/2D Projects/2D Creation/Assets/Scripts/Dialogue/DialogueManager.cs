@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool isDialogueActive;
     private bool areChoicesShowing = false;
+    private bool skipFrameInput = false;
 
     private DialogueSO currentDialogue;
     private int dialogueIndex;
@@ -37,7 +38,13 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if(isDialogueActive && !areChoicesShowing)
+        if (skipFrameInput)
+        {
+            skipFrameInput = false;
+            return;
+        }
+
+        if (isDialogueActive && !areChoicesShowing)
         {
             if (playerInput != null && playerInput.actions != null)
             {
@@ -66,6 +73,7 @@ public class DialogueManager : MonoBehaviour
         SwitchToUIMap();
         ResetButtons();
         ShowDialogue();
+        skipFrameInput = true;
     }
 
 
@@ -97,15 +105,31 @@ public class DialogueManager : MonoBehaviour
                 choiceButtons[i].gameObject.SetActive(true);
                 choiceButtons[i].onClick.AddListener(() => ChooseOption(option.nextDialogue));
             }
+            StartCoroutine(FocusFirstButton());
         }
         else
         {
-            choiceButtons[0].GetComponentInChildren<TMP_Text>().text = "Ok.";
-            choiceButtons[0].onClick.AddListener(EndDialogue);
-            choiceButtons[0].gameObject.SetActive(true);
-        }
+            if(currentDialogue.turnInObjectiveOnEnd != null && 
+                GameManager.Instance.objectiveManager.IsObjectiveComplete(currentDialogue.turnInObjectiveOnEnd))
+            {
+                EndDialogue();
+                ObjectiveEvents.OnObjectiveTurnInRequested?.Invoke(currentDialogue.turnInObjectiveOnEnd);
+                
+            }
+            else if (currentDialogue.offerObjectiveOnEnd != null)
+            {
+                EndDialogue();
+                ObjectiveEvents.OnObjectiveOfferRequested?.Invoke(currentDialogue.offerObjectiveOnEnd);
+            }
+            else
+            {
+                choiceButtons[0].GetComponentInChildren<TMP_Text>().text = "Ok.";
+                choiceButtons[0].onClick.AddListener(EndDialogue);
+                choiceButtons[0].gameObject.SetActive(true);
 
-        StartCoroutine(FocusFirstButton());
+                StartCoroutine(FocusFirstButton());
+            }
+        }
     }
 
     private void ChooseOption(DialogueSO dialogueSO)

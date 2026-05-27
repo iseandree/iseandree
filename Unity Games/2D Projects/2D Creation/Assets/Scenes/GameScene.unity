@@ -7768,6 +7768,7 @@ MonoBehaviour:
   difficultySelected: 0
   dialogueManager: {fileID: 428157242}
   dialogueHistoryTracker: {fileID: 428157243}
+  objectiveManager: {fileID: 536357859}
   timeStamps:
   - timeRatio: 0
     color: {r: 1, g: 1, b: 1, a: 0}
@@ -10037,20 +10038,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: conversations.Array.size
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: a75ad659092196346a90a6a57d6fb218, type: 2}
+      objectReference: {fileID: 11400000, guid: ac276e4f4b7195b41b39a9c49b02a67e, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: b59fda387eae02b4ca45e0638a2a11e9, type: 2}
+      objectReference: {fileID: 11400000, guid: dc6f6fc679ebbbc4ab561e1fe547c4dd, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 08b66b1ac4650c141b5d6a92fe122664, type: 2}
+      objectReference: {fileID: 11400000, guid: e3825ff5b822a3340ad159b85a50a184, type: 2}
     - target: {fileID: 8908606811903649968, guid: 4b181694b886a80468e2276af6a87f41, type: 3}
       propertyPath: 'conversations.Array.data[3]'
       value: 

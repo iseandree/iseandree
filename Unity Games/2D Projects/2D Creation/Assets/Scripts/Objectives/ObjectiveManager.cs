@@ -46,6 +46,15 @@ public class ObjectiveManager : MonoBehaviour, IDataPersistence
 
         objectiveProgress.Remove(objectiveSO);
         completedObjectives.Add(objectiveSO);
+
+        foreach (var objective in objectiveSO.objectives)
+        {
+            if(objective.targetItem != null && objective.requiredAmount > 0)
+            {
+                InventoryManager.Instance.RemoveItem(objective.targetItem, objective.requiredAmount);
+            }
+        }
+
         foreach (var reward in objectiveSO.rewards)
         {
             if (reward.auraScale > 0f)

@@ -79,14 +79,13 @@ public class ObjectiveLogUI : MonoBehaviour
 
     public void OnAcceptObjectiveSelected()
     {
+        ObjectiveEvents.OnObjectiveAccepted?.Invoke(objectiveSO);
         objectiveManager.AcceptObjective(objectiveSO);
-
         SetCanvasState(completeCanvasGroup, false);
         SetCanvasState(acceptCanvasGroup, false);
         SetCanvasState(declineCanvasGroup, false);
         RefreshObjectiveList();
         HandleQuestSelected(noAvailableObjectiveSO);
-
     }
 
     public void OnDeclineObjectiveSelected()

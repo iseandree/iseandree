@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public static GameManager Instance;
     public DialogueManager dialogueManager;
     public DialogueHistoryTracker dialogueHistoryTracker;
+    public ObjectiveManager objectiveManager;
 
     // SerializeField - Day/Night
     [SerializeField] DayAndNightTimeStamp[] timeStamps;

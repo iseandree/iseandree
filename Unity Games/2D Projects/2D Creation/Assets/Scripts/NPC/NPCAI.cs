@@ -44,6 +44,16 @@ public class NPCAI : MonoBehaviour
         randomTime = Random.Range(minWalkTime, maxWalkTime);
     }
 
+    private void OnEnable()
+    {
+        ObjectiveEvents.OnObjectiveAccepted += OnObjectiveAccepted_RemoveOfferings;
+    }
+
+    private void OnDisable()
+    {
+        ObjectiveEvents.OnObjectiveAccepted -= OnObjectiveAccepted_RemoveOfferings;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -233,5 +243,21 @@ public class NPCAI : MonoBehaviour
         // Store the game object attached to the ideal Collider to the confirmed interactable and return true for this method. 
         player = matchingPlayer.gameObject;
         return true;
+    }
+
+    private void OnObjectiveAccepted_RemoveOfferings(ObjectiveSO acceptedObjective)
+    {
+        for(int i = conversations.Count - 1; i >= 0; i--)
+        {
+            var convo = conversations[i];
+            if(convo == null)
+            {
+                continue;
+            }
+            if(convo.offerObjectiveOnEnd == acceptedObjective)
+            {
+                conversations.RemoveAt(i);
+            }
+        }
     }
 }
