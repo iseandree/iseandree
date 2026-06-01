@@ -13,20 +13,17 @@ public class GameData
     public float currentCycleTime;
     public Vector3 playerPosition;
 
-
     // Variables - Game Mechanic related
-    public int auraPoints;
     public SerializableDictionary<string, bool> checkPointsCrossed;
     public SerializableDictionary<string, bool> itemsCollected;
     public InventorySlot slot;
-    public Vector3 auraScale;
+    public float auraScale;
  
     public GameData()
     {
         this.gameDifficulty = DifficultySettings.Normal;
         this.currentTimeStampIndex = -1;
         this.currentCycleTime = 0;
-        this.auraPoints = 0;
         playerPosition = Vector3.zero;
         checkPointsCrossed = new SerializableDictionary<string, bool>();
         itemsCollected = new SerializableDictionary<string, bool>();
@@ -35,7 +32,6 @@ public class GameData
             itemSO = null,
             quantity = 0
         };
-        this.auraScale = new Vector3(0, 0, 0);
+        this.auraScale = 0;
     }
-
 }

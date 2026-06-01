@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Represents a configurable objective definition, including its name, description, priority, objectives, and
+// associated rewards, for use within the quest or objective system.
 [CreateAssetMenu(fileName = "New Objective", menuName = "ObjectiveSO")]
 public class ObjectiveSO : ScriptableObject
 {
@@ -34,5 +36,4 @@ public class ObjectiveReward
 
     //Can be rewared in aura to increase scale
     public float auraScale;
-
 }

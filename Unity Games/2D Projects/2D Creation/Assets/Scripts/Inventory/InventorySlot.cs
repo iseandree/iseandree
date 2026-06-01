@@ -6,7 +6,7 @@ using UnityEngine.UI;
  * elements and the inventory manager. Code inspired by and sourced by Night Run Studio https://www.youtube.com/playlist?list=PLSR2vNOypvs7sV_ks7h42F7hZ7DmGJqU6 */
 public class InventorySlot : MonoBehaviour
 {
-    // Variables
+    // Public Variables
     public ItemSO itemSO;
     public int quantity;
     public Image itemImage;

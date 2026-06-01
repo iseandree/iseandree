@@ -10,11 +10,12 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 {
     public static InventoryManager Instance;
 
-    // Variables - Item related
+    // Public Variables - Item related
     public InventorySlot[] itemSlots;
     public float aura;
     public static event Action<float> OnAuraIncreased;
 
+    // Using the singleton design pattern Instance must be set and initialized immediately
     private void Awake()
     {
         if (Instance == null)
@@ -53,6 +54,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     // in an empty slot.
     public void AddItem(ItemSO itemSO, int quantity)
     {
+        // If the item is aura then just set the amount of aura based on the quantity and exit
         if(itemSO.isAura)
         {
             aura = quantity;
@@ -97,34 +99,13 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     }
 
     // Removes the specified item from the inventory and just deletes it from the game world.
+    // This should not be necesarry as the amount of any particular item should not exceed whats needed.
     private void DropItem(ItemSO itemSO, int quantity)
     {
         Debug.Log("inventory is full");
     }
 
-    // Attempts to use the item in the specified inventory slot, decrementing its quantity and updating the slot state.
-    public void UseItem(InventorySlot slot)
-    {
-        if (HasItem(slot.itemSO))
-        {
-            // If the slot item is not empty and there are more than 0 then give them to the NPC
-            if (slot.itemSO != null && slot.quantity >= 0)
-            {
-                Debug.Log("Trying to use item: " + slot.itemSO.itemName);
-                slot.quantity--;
-
-                if (slot.quantity <= 0)
-                {
-                    slot.itemSO = null;
-                }
-                slot.UpdateUI();
-            }
-            else
-            {
-                Debug.Log("No item available");
-            }
-        }
-    }
+    // Remove the necessary item from the player's inventory in response to completing requirements for an objective
     public void RemoveItem(ItemSO itemSO, int quantity)
     {
         for(int i = 0; i< itemSlots.Length; i++)
@@ -150,28 +131,24 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             }
         }
     }
+
+    // Checks if the player has a particular item in their inventory
     public bool HasItem(ItemSO itemSO)
     {
-        Debug.Log($"[Inventory Check] NPC is asking for: {itemSO.itemName}.");
-        // If the system is looking for a food item, check the raw integer tracker
-
-        // Otherwise, check the regular physical inventory slots
+        // Check every slot and see if that slot has the referenced item
         foreach (var slot in itemSlots)
         {
+            // If they match and there is more than zero of that item return true
             if (slot.itemSO == itemSO && slot.quantity > 0)
             {
                 return true;
             }
         }
+
         return false;
     }
 
-    // Add this new public method
-    public void ChangeAuraScale(float amount)
-    {
-        // Because we are inside InventoryManager, we are allowed to Invoke the event!
-        OnAuraIncreased?.Invoke(amount);
-    }
+    // Get the amount of a particular item and return the value for use elsewhere
     public int GetItemQuantity(ItemSO itemSO)
     {
         int total = 0;
@@ -184,6 +161,12 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             }
         }
         return total;
+    }
+
+    // Invokes the necessary event to increase the scale of the aura of the player properly passing the amount to increase by
+    public void ChangeAuraScale(float amount)
+    {
+        OnAuraIncreased?.Invoke(amount);
     }
 
     // Saves the current item slot data into the specified structure.

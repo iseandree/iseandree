@@ -3,10 +3,32 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-// Day/Night Cycle Referenced by Mina Pêcheux from https://medium.com/codex/creating-a-basic-day-and-night-cycle-in-unity-c-dff942c1690d
+// Day/Night Cycle inspired/soruced by Mina Pêcheux from https://medium.com/codex/creating-a-basic-day-and-night-cycle-in-unity-c-dff942c1690d
 public class GameManager : MonoBehaviour, IDataPersistence
 {
-    
+    // Instance Variables
+    public static GameManager Instance;
+    public DialogueManager dialogueManager;
+    public DialogueHistoryTracker dialogueHistoryTracker;
+    public ObjectiveManager objectiveManager;
+
+    // Difficulty Variables
+    public enum DifficultySettings { Easy, Normal, Hard };
+    [SerializeField] public DifficultySettings difficultySelected;
+    private float difficultyModifier;
+
+
+    // Day/Night Cycle Variables
+    [SerializeField] DayAndNightTimeStamp[] timeStamps;
+    [SerializeField] float cycleLength; // the total duration of the cycle (from morning to morning) in seconds
+    [SerializeField] Light2D light2D;
+    private float countDown = 180.0f;
+    private float timeStampDifference;
+    private float currentCycleTime; // the current time that has elapsed in this cycle
+    private float currentTimeStamp; // the exact time in seconds for the current time stamp
+    private float nextTimeStamp; // the exact time in seconds for the next time stamp
+    private int currentTimeStampIndex;   // index for the current time stamp
+    private int nextTimeStampIndex; // index for the upcoming time stamp
     [System.Serializable]
     public struct DayAndNightTimeStamp
     {
@@ -15,46 +37,21 @@ public class GameManager : MonoBehaviour, IDataPersistence
         public float intensity;
     }
 
-    public enum DifficultySettings { Easy, Normal, Hard };
-    [SerializeField] public DifficultySettings difficultySelected;
-
-    public static GameManager Instance;
-    public DialogueManager dialogueManager;
-    public DialogueHistoryTracker dialogueHistoryTracker;
-    public ObjectiveManager objectiveManager;
-
-    // SerializeField - Day/Night
-    [SerializeField] DayAndNightTimeStamp[] timeStamps;
-    [SerializeField] float cycleLength; // the total duration of the cycle (from morning to morning) in seconds
-    [SerializeField] Light2D light2D;
-
-    // Private Variables - To compare to the current cycle time variable, acknowledging if a time stamp has passed or not.
-    private float countDown = 180.0f;
-    private float difficultyModifier;
-    private float timeStampDifference;
-    private float currentCycleTime; // the current time that has elapsed in this cycle
-    private float currentTimeStamp; // the exact time in seconds for the current time stamp
-    private float nextTimeStamp; // the exact time in seconds for the next time stamp
-    private int currentTimeStampIndex;   // index for the current time stamp
-    private int nextTimeStampIndex; // index for the upcoming time stamp
+    // Helper variables
     private bool isGameRunning;
 
     // Temporary Setup
     [SerializeField] private GameObject background;
     [SerializeField] private TextMeshProUGUI timerText;
 
-    // Private Variables - Game Mechanics
-    private int auraPoints;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DifficultySelect(GameEvents.SavedDifficulty);
+        isGameRunning = true;
         currentTimeStampIndex = -1;
-        auraPoints = 0;
         CycleTimeStamps();
         Debug.Log(difficultySelected);
-        isGameRunning = true;
     }
 
     // Awake is called when the script instance is being loaded
@@ -70,11 +67,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    // Subscribe Difficulty Select to the OnDifficultySelected event that is activated from the main menu
     private void OnEnable()
     {
         GameEvents.OnDifficultySelected += DifficultySelect;
     }
 
+    // Unsubscribe Difficulty Select to the OnDifficultySelected event that is activated from the main menu
     private void OnDisable()
     {
         GameEvents.OnDifficultySelected -= DifficultySelect;
@@ -91,12 +90,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // Count the total time elapsed since the game has started and have it wrap back to 0 when the cycle ends using modulo
         currentCycleTime = (currentCycleTime + Time.deltaTime) % cycleLength;
 
-        // Blend color and intensity between timestamps
-        float lerpTime = (currentCycleTime - currentTimeStamp) / timeStampDifference;
-        DayAndNightTimeStamp current = timeStamps[currentTimeStampIndex];
-        DayAndNightTimeStamp next = timeStamps[nextTimeStampIndex];
-        light2D.color = Color.Lerp(current.color, next.color, lerpTime);
-        light2D.intensity = Mathf.Lerp(current.intensity, next.intensity, lerpTime);
+        ApplyLightTransition();
 
         // Check if a time stamp has passed, compare the updated currentCycleTime with the time in seconds of the next time stamp
         if (currentCycleTime >= nextTimeStamp)
@@ -114,12 +108,25 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 isGameRunning = false;
             }
         }
+
         timerText.text = currentCycleTime.ToString();
     }
 
+    // Blend color and intensity between timestamps
+    private void ApplyLightTransition()
+    {
+        float lerpTime = (currentCycleTime - currentTimeStamp) / timeStampDifference;
+        DayAndNightTimeStamp current = timeStamps[currentTimeStampIndex];
+        DayAndNightTimeStamp next = timeStamps[nextTimeStampIndex];
+        light2D.color = Color.Lerp(current.color, next.color, lerpTime);
+        light2D.intensity = Mathf.Lerp(current.intensity, next.intensity, lerpTime);
+    }
+
+    // Advances the current and next time stamp indices to the next positions in the cycle and updates their
+    // corresponding time values and the duration between them.
     private void CycleTimeStamps()
     {
-        // increment the currentTimeStampIndex, but with a modulo operation to ensure it doesn’t overshoot the length of the marks array
+        // Increment the currentTimeStampIndex, but with a modulo operation to ensure it doesn’t overshoot the length of the marks array
         currentTimeStampIndex = (currentTimeStampIndex + 1) % timeStamps.Length; // should be index 0 to start then increase
         nextTimeStampIndex = (currentTimeStampIndex + 1) % timeStamps.Length; // should be index 1 to start then increase
 
@@ -129,7 +136,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         nextTimeStamp = timeStamps[nextTimeStampIndex].timeRatio * cycleLength;
 
         // The total duration between the current and next time stamps
-        timeStampDifference = nextTimeStamp - currentTimeStamp; // The difference between the next and the current time stamps
+        timeStampDifference = nextTimeStamp - currentTimeStamp; 
 
         // Reached the last mark in the cycle re-add the cycle length to this duration to get back a positive number
         if (timeStampDifference < 0)
@@ -138,6 +145,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    // Selects the game difficulty and updates related game state based on the specified difficulty level.
     public void DifficultySelect(int difficulty)
     {
         switch (difficulty)
@@ -162,23 +170,23 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
 
         cycleLength = countDown * difficultyModifier;
-        isGameRunning = true;
     }
 
+
+    // Updates the specified <see cref="GameData"/> instance with the current game state values.
     public void SaveData(ref GameData data)
     {
         data.gameDifficulty = difficultySelected;
         data.currentTimeStampIndex = currentTimeStampIndex;
         data.currentCycleTime = currentCycleTime;
-        data.auraPoints = auraPoints;
     }
 
+    // Loads the specified game data into this current game state
     public void LoadData(GameData data)
     {
         this.difficultySelected = data.gameDifficulty;
         this.currentTimeStampIndex = data.currentTimeStampIndex;
         this.currentCycleTime = data.currentCycleTime;
-        this.auraPoints = data.auraPoints;
         Debug.Log("Difficulty Loaded: " + difficultySelected + 
             " Current Time Stamp Index: " + currentTimeStampIndex + " Current Time Elapsed: " + currentCycleTime);
     }

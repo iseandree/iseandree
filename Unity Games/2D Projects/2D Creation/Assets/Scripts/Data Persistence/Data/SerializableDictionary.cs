@@ -14,8 +14,11 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
     // Invoked before the object is serialized to save the dictionary to the lists
     public void OnBeforeSerialize()
     {
+        // Clear keys and values
         keys.Clear();
         values.Clear();
+
+        // Copy everything from the dictionary into the lists
         foreach(KeyValuePair<TKey,TValue> pair in this)
         {
             keys.Add(pair.Key);

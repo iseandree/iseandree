@@ -12,6 +12,8 @@ public class FileDataHandler
     private bool useEncryption = false;
     private readonly string encryptionCodeWord = "WolfGang";
 
+    // Initializes a new instance of the FileDataHandler class with the specified data directory, file name, and
+    // encryption option.
     public FileDataHandler(string dataDirectoryPath, string dataFileName, bool useEncryption)
     {
         this.dataDirectoryPath = dataDirectoryPath;

@@ -46,22 +46,6 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private LayerMask borderLayer;
     private GameObject interactable;
 
-    // Private Variables - Game Mechanics
-    private GameObject aura;
-    private float currentAuraScale = 0.0f;
-    private ObjectiveSO objectiveToOffer;
-
-
-    private void OnEnable()
-    {
-        InventoryManager.OnAuraIncreased += IncreaseAura;    
-    }
-
-    private void OnDisable()
-    {
-        InventoryManager.OnAuraIncreased -= IncreaseAura;
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
@@ -82,18 +66,6 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         lastJumpTime = -jumpCooldown;
         walkSpeed = moveSpeed;
         runSpeed = moveSpeed * speedMultiplier;
-
-        // Initialize Game Mechanic related Variables
-        aura = GameObject.Find("Aura");
-        if (aura != null)
-        {
-            // Automatically grab whatever size you set in the Inspector layout
-            currentAuraScale = aura.transform.localScale.x;
-        }
-        else
-        {
-            Debug.LogError("[PlayerController] Could not find a GameObject named 'Aura' in the scene!");
-        }
     }
 
     // Update is called once per frame
@@ -124,13 +96,8 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         }
     }
 
-    /// <summary>
-    /// Handles physics-based updates for the player, including movement and jump actions. Called at a fixed time
-    /// interval by the physics engine.
-    /// </summary>
-    /// <remarks>This method should be used to apply forces and handle physics-related logic for the player
-    /// character. It is called automatically by the engine at consistent intervals, making it suitable for physics
-    /// calculations rather than frame-dependent updates.</remarks>
+    // Handles physics-based updates for the player, including movement and jump actions. Called at a fixed time
+    // interval by the physics engine.
     private void FixedUpdate()
     {
         // Check if the player is grounded
@@ -148,19 +115,14 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         }
     }
 
-    /// <summary>
-    /// Check if the player is Grounded and draw the line so I can see it in the scene
-    /// </summary>
+    // Check if the player is Grounded and draw the line so I can see it in the scene
     private void CheckIsGrounded()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, groundLayer);
         Debug.DrawRay(transform.position, Vector2.down * rayCastLength, Color.green);
     }
 
-    /// <summary>
-    /// Make the player face the direction in which they are recieving input for
-    /// </summary>
-    /// <param name="moveInput"></param>
+    // Make the player face the direction in which they are recieving input for
     private void FaceInputDirection(float moveInput)
     {
         if (moveInput < 0 && !isFacingLeft)
@@ -175,12 +137,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         }
     }
 
-    /// <summary>
-    /// Applies horizontal movement forces to the Rigidbody2D based on current input and movement state.
-    /// </summary>
-    /// <remarks>This method adjusts the Rigidbody2D's velocity to match the desired speed, taking into
-    /// account whether the character is running or walking. It should be called during the physics update to ensure
-    /// smooth and responsive movement.</remarks>
+    // Applies horizontal movement forces to the Rigidbody2D based on current input and movement state.
     private void ApplyMovementForces()
     {
         float currentMaxSpeed = isRunning ? runSpeed : walkSpeed;
@@ -191,12 +148,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         rb.AddForce(Vector2.right * movement, ForceMode2D.Force);
     }
 
-    /// <summary>
-    /// Updates the character's movement state and animation based on input and run action status.
-    /// </summary>
-    /// <remarks>This method should be called each frame to ensure the character's animation and movement
-    /// speed reflect the current input. It sets the appropriate animation states for running and walking, and adjusts
-    /// the movement speed accordingly.</remarks>
+    // Updates the character's movement state and animation based on input and run action status.
     private void HorizontalMovementAnimations()
     {
         if(isRunning && moveInputPresent)
@@ -216,12 +168,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         }
     }
 
-    /// <summary>
-    /// Handles player jump activation and modifies jump behavior based on input state.
-    /// </summary>
-    /// <remarks>This method should be called each frame to process jump input. It ensures that the player can
-    /// only initiate a jump when grounded and after the jump cooldown has elapsed. If the jump input is released while
-    /// the player is moving upward, the upward velocity is reduced to allow for variable jump heights.</remarks>
+    // Handles player jump activation and modifies jump behavior based on input state.
     private void ActivateJump()
     {
         // Allow the player to jump but prevent the player from spamming jump
@@ -236,25 +183,14 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         }
     }
 
-    /// <summary>
-    /// Updates the animator parameters to reflect the character's airborne state.
-    /// </summary>
-    /// <remarks>Call this method to synchronize animation state with the character's grounded status. This
-    /// ensures that jump or fall animations are triggered appropriately when the character leaves or returns to the
-    /// ground.</remarks>
+    // Updates the animator parameters to reflect the character's airborne state.
     private void UpdateAirAnimations()
     {
         animator.SetBool("isJumping", !isGrounded);
     }
 
-    /// <summary>
-    /// Determines whether an interactable object is within range and updates the current interactable reference
-    /// accordingly.
-    /// </summary>
-    /// <remarks>This method searches for the closest collider tagged as "Interactable" within a specified
-    /// radius of the player. If found, the interactable reference is updated to the corresponding GameObject;
-    /// otherwise, it is set to null.</remarks>
-    /// <returns>true if a valid interactable object is detected within range; otherwise, false.</returns>
+    // Determines whether an interactable object is within range and updates the current interactable reference
+    // accordingly.
     private bool DetectInteractable()
     {
         // Get an array of all possible colliders within the range of the player
@@ -302,14 +238,6 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         return true;
     }
 
-    public void IncreaseAura(float auraAmount)
-    {
-        currentAuraScale += auraAmount;
-        if (aura != null)
-        {
-            aura.transform.localScale = new Vector3(currentAuraScale, currentAuraScale, currentAuraScale);
-        }
-    }
 
     private void OnDrawGizmos()
     {

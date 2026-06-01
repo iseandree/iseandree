@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// Provides events and members for game setup from the main menu
 public static class GameEvents
 {
     public static int SavedDifficulty = 1;

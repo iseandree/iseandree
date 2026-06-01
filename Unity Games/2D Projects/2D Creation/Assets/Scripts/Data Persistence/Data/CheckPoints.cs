@@ -10,10 +10,13 @@ public class CheckPoints : MonoBehaviour, IDataPersistence
         iD = System.Guid.NewGuid().ToString();
     }
 
+    // Public variables
     public bool isCrossed = false;
 
+    // Check if this checkpoint's collider was encountered by the player 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // If so set isCrossed to true and save the game
         if(collision.gameObject.CompareTag("Player"))
         {
             isCrossed = true;
