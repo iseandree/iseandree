@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 // Day/Night Cycle inspired/soruced by Mina Pêcheux from https://medium.com/codex/creating-a-basic-day-and-night-cycle-in-unity-c-dff942c1690d
@@ -16,7 +18,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public enum DifficultySettings { Easy, Normal, Hard };
     [SerializeField] public DifficultySettings difficultySelected;
     private float difficultyModifier;
-
 
     // Day/Night Cycle Variables
     [SerializeField] DayAndNightTimeStamp[] timeStamps;
@@ -39,6 +40,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     // Helper variables
     private bool isGameRunning;
+    private bool isPaused = false;
+    private PlayerInput playerInput;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject savePrompt;
 
     // Temporary Setup
     [SerializeField] private GameObject background;
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         isGameRunning = true;
         currentTimeStampIndex = -1;
         CycleTimeStamps();
+        playerInput = FindFirstObjectByType<PlayerController2D>().GetComponent<PlayerInput>();
         Debug.Log(difficultySelected);
     }
 
@@ -80,7 +86,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!isGameRunning)
         {
@@ -136,7 +142,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         nextTimeStamp = timeStamps[nextTimeStampIndex].timeRatio * cycleLength;
 
         // The total duration between the current and next time stamps
-        timeStampDifference = nextTimeStamp - currentTimeStamp; 
+        timeStampDifference = nextTimeStamp - currentTimeStamp;
 
         // Reached the last mark in the cycle re-add the cycle length to this duration to get back a positive number
         if (timeStampDifference < 0)
@@ -172,6 +178,69 @@ public class GameManager : MonoBehaviour, IDataPersistence
         cycleLength = countDown * difficultyModifier;
     }
 
+    // Using the player input, Pause the game and show the menu
+    public void PauseGame()
+    {
+        SwitchToUIMap();
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+    }
+
+    // Using a button in game, resume the game 
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        SwitchToPlayerMap();
+    }
+
+    // Save the Game per character choice
+    public void SaveGame()
+    {
+        DataPersistenceManager.Instance.SaveGame();
+    }
+
+    // Wait to Quit after a second or so, so that the game can save
+    private IEnumerator QuitGameOnTimer()
+    {
+        yield return new WaitForSeconds(1);
+        Application.Quit();
+    }
+
+    // Can't trigger QuitGameOnTimer on button so this is a buffer method really
+    public void QuitGame()
+    {
+        QuitGameOnTimer();
+    }
+
+    // When the player is done using the UI system switch back to regular player input
+    private void SwitchToPlayerMap()
+    {
+        if (playerInput != null)
+        {
+            // Changes the active map back to gameplay. Replace "Player" with your exact player map name.
+            playerInput.SwitchCurrentActionMap("Player");
+
+            // Optional: Re-lock cursor for gameplay
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    // When the player interacts with NPCs or objects that provide dialogue switch to the UI map to navigate the UI
+    private void SwitchToUIMap()
+    {
+        if (playerInput != null)
+        {
+            // Changes the active map to "UI". Replace "UI" with your exact UI map name.
+            playerInput.SwitchCurrentActionMap("UI");
+
+            // Optional: Unlock cursor for MnK players if your menu allows mouse clicking
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
 
     // Updates the specified <see cref="GameData"/> instance with the current game state values.
     public void SaveData(ref GameData data)
@@ -187,7 +256,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         this.difficultySelected = data.gameDifficulty;
         this.currentTimeStampIndex = data.currentTimeStampIndex;
         this.currentCycleTime = data.currentCycleTime;
-        Debug.Log("Difficulty Loaded: " + difficultySelected + 
+        Debug.Log("Difficulty Loaded: " + difficultySelected +
             " Current Time Stamp Index: " + currentTimeStampIndex + " Current Time Elapsed: " + currentCycleTime);
     }
 }

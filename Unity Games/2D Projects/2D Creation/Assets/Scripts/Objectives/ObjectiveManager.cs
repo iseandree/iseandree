@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 // Manages the lifecycle, progress, and completion state of objectives within the game, including tracking active and

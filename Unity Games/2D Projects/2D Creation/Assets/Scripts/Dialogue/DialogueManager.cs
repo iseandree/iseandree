@@ -67,20 +67,6 @@ public class DialogueManager : MonoBehaviour
         return Time.unscaledTime - lastDialogueEndTime >= dialogueCooldown;
     }
 
-    // When the player interacts with NPCs or objects that provide dialogue switch to the UI map to navigate the UI
-    private void SwitchToUIMap()
-    {
-        if (playerInput != null)
-        {
-            // Changes the active map to "UI". Replace "UI" with your exact UI map name.
-            playerInput.SwitchCurrentActionMap("UI");
-
-            // Optional: Unlock cursor for MnK players if your menu allows mouse clicking
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }
-
     // Begins a new dialogue sequence using the specified dialogue script object.
     public void StartDialogue(DialogueSO dialogueSO)
     {
@@ -223,6 +209,20 @@ public class DialogueManager : MonoBehaviour
             // Optional: Re-lock cursor for gameplay
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+    }
+
+    // When the player interacts with NPCs or objects that provide dialogue switch to the UI map to navigate the UI
+    private void SwitchToUIMap()
+    {
+        if (playerInput != null)
+        {
+            // Changes the active map to "UI". Replace "UI" with your exact UI map name.
+            playerInput.SwitchCurrentActionMap("UI");
+
+            // Optional: Unlock cursor for MnK players if your menu allows mouse clicking
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

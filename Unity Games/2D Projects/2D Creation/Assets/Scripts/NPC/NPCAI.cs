@@ -20,6 +20,8 @@ public class NPCAI : MonoBehaviour
     [SerializeField] private float minWalkTime;
     [SerializeField] private float maxWalkTime;
     [SerializeField] private Animator interactAnim;
+    [SerializeField] private GameObject aura;
+    [SerializeField] private GameObject interactIcon;
     [SerializeField] private float circleCastRadius = 2.0f;
     [SerializeField] private bool hasObjective = false;
     [SerializeField] private bool hasReasonToTalk = false;
@@ -34,6 +36,7 @@ public class NPCAI : MonoBehaviour
     private bool isWalking = true;
     private bool isFlipping = false;
     private bool isTalking = false;
+    private bool isPlayerNearby = false;
     private Animator animator;
     private GameObject player;
 
@@ -43,6 +46,8 @@ public class NPCAI : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         randomTime = Random.Range(minWalkTime, maxWalkTime);
+        interactIcon.SetActive(false);
+        aura.SetActive(false);
     }
 
     // When scene starts subscribe to Objective Event OnObjectiveAccepted
@@ -61,7 +66,10 @@ public class NPCAI : MonoBehaviour
     void Update()
     {
         // Variable to use if the player is near and this particular npc has a reason to talk to the player 
-        bool isPlayerNearby = (hasObjective || hasReasonToTalk) && DetectPlayer();
+        if (hasObjective || hasReasonToTalk)
+        {
+            isPlayerNearby = DetectPlayer();
+        }
 
         // If this NPC is already talking but there is no dialogue active reset their talking state
         if (isTalking && !GameManager.Instance.dialogueManager.isDialogueActive)
@@ -75,6 +83,7 @@ public class NPCAI : MonoBehaviour
 
         // Animate this NPC walking if they are supposed to be walking
         animator.SetBool("isWalking", isWalking);
+
     }
 
     // This changes the states in which this NPC will operate under randomly as they wander
@@ -136,6 +145,7 @@ public class NPCAI : MonoBehaviour
                 // Store the ideal Collider as the confirmed matching collider and store its distance from this N{C
                 matchingPlayer = hit;
                 distanceFromMatching = distanceFromPlayer;
+                interactIcon.SetActive(true);
             }
         }
 
@@ -144,6 +154,7 @@ public class NPCAI : MonoBehaviour
         {
             player = null;
             interactAnim.Play("Close Icon");
+            StartCoroutine(DisableAfterAnimation(interactIcon, "Close Icon"));
             return false;
         }
 
@@ -284,5 +295,19 @@ public class NPCAI : MonoBehaviour
                 conversations.RemoveAt(i);
             }
         }
+    }
+
+    // Wait for an animation to finish before disabling game object again
+    private IEnumerator DisableAfterAnimation(GameObject target, string animName)
+    {
+        yield return null;
+
+        // Get the duration of the current animation clip
+        float duration = interactAnim.GetCurrentAnimatorStateInfo(0).length;
+
+        yield return new WaitForSeconds(duration);
+
+        // Deactivate the object safely
+        target.SetActive(false);
     }
 }

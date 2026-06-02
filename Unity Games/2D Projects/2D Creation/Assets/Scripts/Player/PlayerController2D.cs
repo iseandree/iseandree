@@ -38,13 +38,16 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
     private InputAction jumpAction;
     private InputAction runAction;
     private InputAction interactAction;
-    private InputAction openObjectiveAction;
+    private InputAction pauseAction;
 
     // Private Variables - Components
     private Rigidbody2D rb;
     private LayerMask groundLayer;
     private LayerMask borderLayer;
     private GameObject interactable;
+
+    // Public Variables
+    public bool canSeeAura = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -61,6 +64,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         jumpAction = playerInput.actions.FindAction("Jump");
         runAction = playerInput.actions.FindAction("Sprint");
         interactAction = playerInput.actions.FindAction("Interact");
+        pauseAction = playerInput.actions.FindAction("Pause Game");
 
         // Initialize Movement variables
         lastJumpTime = -jumpCooldown;
@@ -93,6 +97,12 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
                 pickupItem.Collect();
                 animator.SetTrigger("PickupTrigger");
             }
+        }
+
+        // Pause the game
+        if(pauseAction.WasPressedThisFrame())
+        {
+            GameManager.Instance.PauseGame();
         }
     }
 

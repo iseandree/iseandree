@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// Represents a checkpoint in the game that tracks whether it has been crossed by the player and manages its
+// persistence state.
 public class CheckPoints : MonoBehaviour, IDataPersistence
 {
     // Generate a random id for items so we can keep track of which have been collected
