@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74680dcea2f614288b1c22310c17fc, type: 3}
   m_Name: Aura
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: aura
   itemName: Aura
   itemDescription: The essense of us all
   icon: {fileID: 7482667652216324306, guid: 36280312c136ee64f847eaf5ced4c2f1, type: 3}

@@ -37,8 +37,10 @@ public class NPCAI : MonoBehaviour
     private bool isFlipping = false;
     private bool isTalking = false;
     private bool isPlayerNearby = false;
+    private bool isIconShowing = false;
     private Animator animator;
     private GameObject player;
+    private Coroutine disableUIElementCoroutine;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -66,7 +68,11 @@ public class NPCAI : MonoBehaviour
     void Update()
     {
         // Variable to use if the player is near and this particular npc has a reason to talk to the player 
-        if (hasObjective || hasReasonToTalk)
+        if (!(hasObjective || hasReasonToTalk))
+        {
+            isPlayerNearby = false;
+        }
+        else
         {
             isPlayerNearby = DetectPlayer();
         }
@@ -102,7 +108,7 @@ public class NPCAI : MonoBehaviour
     }
 
     // This flips this NPC to face the direction they are heading toward
-    IEnumerator Flip()
+    private IEnumerator Flip()
     {
         isFlipping = true;
         transform.Rotate(0, 180, 0);
@@ -145,6 +151,19 @@ public class NPCAI : MonoBehaviour
                 // Store the ideal Collider as the confirmed matching collider and store its distance from this N{C
                 matchingPlayer = hit;
                 distanceFromMatching = distanceFromPlayer;
+
+                if (matchingPlayer.transform.position.x > transform.position.x)
+                {
+                    // Player is to the left, Negate the X scale
+                    transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                    
+                }
+                else if (matchingPlayer.transform.position.x < transform.position.x)
+                {
+                    // Player is to the right, Set X scale to positive
+                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+
                 interactIcon.SetActive(true);
             }
         }
@@ -153,8 +172,7 @@ public class NPCAI : MonoBehaviour
         if (matchingPlayer == null)
         {
             player = null;
-            interactAnim.Play("Close Icon");
-            StartCoroutine(DisableAfterAnimation(interactIcon, "Close Icon"));
+            HandleHideIcon();
             return false;
         }
 
@@ -171,8 +189,12 @@ public class NPCAI : MonoBehaviour
         {
             isWalking = false;
             rb.linearVelocity = Vector2.zero;
-            if (isPlayerNearby)
+            if (isPlayerNearby && !isIconShowing)
             {
+                isIconShowing = true;
+                if (disableUIElementCoroutine != null) StopCoroutine(disableUIElementCoroutine);
+
+                interactIcon.SetActive(true);
                 interactAnim.Play("Open Icon");
             }
         }
@@ -230,12 +252,19 @@ public class NPCAI : MonoBehaviour
                         if (GameManager.Instance.dialogueManager.CanStartDialogue())
                         {
                             CheckForNewConversation();
-                            GameManager.Instance.dialogueManager.StartDialogue(currentConversation);
+                            if (currentConversation != null)
+                            {
+                                GameManager.Instance.dialogueManager.StartDialogue(currentConversation);
 
-                            // Lock the NPC into the talking state
-                            isTalking = true;
-                            isWalking = false;
-                            rb.linearVelocity = Vector2.zero;
+                                // Lock the NPC into the talking state
+                                isTalking = true;
+                                isWalking = false;
+                                rb.linearVelocity = Vector2.zero;
+                            }
+                            else
+                            {
+                                Debug.LogError($"[NPC Debug] {gameObject.name} wanted to talk, but has no valid conversations available right now (Conditions not met or list empty).");
+                            }
                         }
                     }
                 }
@@ -246,12 +275,20 @@ public class NPCAI : MonoBehaviour
     // Checks if this NPC has anything to say 
     private void CheckForNewConversation()
     {
+        currentConversation = null;
+
         // Loop through the list of conversations and if there is a conversation to be had continue
         for (int i = 0; i < conversations.Count; i++)
         {
             var convo = conversations[i];
+
+            if(convo == null)
+            {
+                Debug.LogWarning($"[NPC Debug] Slot {i} in conversations list is null!");
+                continue;
+            }
             // If there is a conversation available and the conditions for that conversation have been met set it as the current conversation
-            if (convo != null && convo.IsConditionMet())
+            if (convo.IsConditionMet())
             {
                 currentConversation = convo;
 
@@ -271,11 +308,7 @@ public class NPCAI : MonoBehaviour
                 }
 
                 currentConversation = convo;
-                break;
-            }
-            else
-            {
-                Debug.LogWarning($"[NPC Debug] Slot {i} in conversations list is null!");
+                return;
             }
         }
     }
@@ -297,17 +330,45 @@ public class NPCAI : MonoBehaviour
         }
     }
 
+    // Extracted helper method to make sure we only shut down the icon animation ONCE safely
+    private void HandleHideIcon()
+    {
+        if (isIconShowing)
+        {
+            isIconShowing = false;
+
+            // Check if the object is actually active before telling its animator to play
+            if (interactIcon.activeInHierarchy && interactAnim != null)
+            {
+                interactAnim.Play("Close Icon");
+
+                if (disableUIElementCoroutine != null)
+                {
+                    StopCoroutine(disableUIElementCoroutine);
+                }
+                disableUIElementCoroutine = StartCoroutine(DisableAfterAnimation(interactIcon, "Close Icon"));
+            }
+        }
+    }
+
     // Wait for an animation to finish before disabling game object again
     private IEnumerator DisableAfterAnimation(GameObject target, string animName)
     {
         yield return null;
 
-        // Get the duration of the current animation clip
-        float duration = interactAnim.GetCurrentAnimatorStateInfo(0).length;
-
-        yield return new WaitForSeconds(duration);
+        // Get the duration of the current animation clip Safely
+        if (interactAnim != null && interactAnim.gameObject.activeInHierarchy)
+        {
+            float duration = interactAnim.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(duration);
+        }
 
         // Deactivate the object safely
         target.SetActive(false);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, circleCastRadius);
     }
 }

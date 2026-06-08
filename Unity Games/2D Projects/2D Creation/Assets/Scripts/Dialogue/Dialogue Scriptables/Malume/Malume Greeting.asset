@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
   - speaker: {fileID: 11400000, guid: 1cc5447a23310504085c6c590d4bb566, type: 2}
-    text: hey get me sumn to eat
+    text: Hey little one, hope you are well.
   options: []
-  offerObjectiveOnEnd: {fileID: 0}
+  removeTheseOnPlay: []
+  removeAfterPlay: 0
+  requiredCompletedObjectives: []
   requiredNPCs: []
   requiredItems: []
-  removeAfterPlay: 0
-  removeTheseOnPlay: []
+  offerObjectiveOnEnd: {fileID: 0}
+  turnInObjectiveOnEnd: {fileID: 0}

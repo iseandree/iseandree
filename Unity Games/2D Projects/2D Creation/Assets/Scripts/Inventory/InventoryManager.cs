@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     // Public Variables - Item related
     public InventorySlot[] itemSlots;
+    [SerializeField] private ItemSO[] itemDatabase;
     public float aura;
     public static event Action<float> OnAuraIncreased;
 
@@ -163,6 +164,20 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         return total;
     }
 
+    // Get the itemSo by its itemID and return it
+    private ItemSO GetItemByID(string itemID)
+    {
+        foreach (ItemSO item in itemDatabase)
+        {
+            if (item.itemID == itemID)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     // Invokes the necessary event to increase the scale of the aura of the player properly passing the amount to increase by
     public void ChangeAuraScale(float amount)
     {
@@ -172,36 +187,53 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     // Saves the current item slot data into the specified structure.
     public void SaveData(ref GameData data)
     {
-        for (int i = 0; i < itemSlots.Length; i++)
+        data.inventorySlots.Clear();
+        
+        foreach(var slot in itemSlots)
         {
-            var slot = itemSlots[i];
-            if (slot.itemSO != null)
-            {
-                data.slot.itemSO = itemSlots[i].itemSO;
-                data.slot.quantity = itemSlots[i].quantity;
+            if (slot.itemSO == null)
+            { 
+                continue;
             }
-            Debug.Log("Slot: " + slot +
-            " Slot Item SO: " + slot.itemSO + " Slot quantity: " + slot.quantity);
+            InventorySlotData slotData = new InventorySlotData
+            {
+                itemID = slot.itemSO.itemID,
+                quantity = slot.quantity
+            };
+            data.inventorySlots.Add(slotData);
         }
     }
 
     // Loads item slot data from the specified game data object into the current instance.
     public void LoadData(GameData data)
     {
-        if (data == null || data.slot == null) return;
-
-        for (int i = 0; i < itemSlots.Length; i++)
+        if (data == null || data.inventorySlots == null)
         {
-            var slot = itemSlots[i];
-            if (slot.itemSO != null)
+            return;
+        }
+
+        foreach (var slot in itemSlots)
+        {
+            slot.itemSO = null;
+            slot.quantity = 0;
+            slot.UpdateUI();
+        }
+
+        for (int i = 0; i < data.inventorySlots.Count && i < itemSlots.Length; i++)
+        {
+            InventorySlotData savedSlot = data.inventorySlots[i];
+
+            ItemSO item = GetItemByID(savedSlot.itemID);
+
+            if (item == null)
             {
-                // Copy saved values into the existing slot instance instead of assigning the foreach iteration variable.
-                itemSlots[i].itemSO = data.slot.itemSO;
-                itemSlots[i].quantity = data.slot.quantity;
-                itemSlots[i].UpdateUI();
+                Debug.LogWarning($"Could not find ItemSO with ID {savedSlot.itemID}");
+                continue;
             }
-            Debug.Log("Slot: " + slot +
-            " Slot Item SO: " + slot.itemSO + " Slot quantity: " + slot.quantity);
+
+            itemSlots[i].itemSO = item;
+            itemSlots[i].quantity = savedSlot.quantity;
+            itemSlots[i].UpdateUI();
         }
     }
 }

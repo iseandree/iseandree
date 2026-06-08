@@ -161,6 +161,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
+                choiceButtons[0].onClick.RemoveAllListeners();
                 choiceButtons[0].GetComponentInChildren<TMP_Text>().text = "Ok.";
                 choiceButtons[0].onClick.AddListener(EndDialogue);
                 choiceButtons[0].gameObject.SetActive(true);

@@ -14,13 +14,18 @@ public class MainMenu : MonoBehaviour
     {
         if (DataPersistenceManager.Instance != null && !DataPersistenceManager.Instance.HasGameData())
         {
-            continueButton.interactable = false;
+            continueButton.gameObject.SetActive(false);
+        }
+        else if (DataPersistenceManager.Instance.HasGameData())
+        {
+            continueButton.gameObject.SetActive(true);
         }
     }
 
     // Handles the continuation to the next scene with data already loaded, pushing it to the Game Manager
     public void OnContinueGameClicked()
     {
+        DataPersistenceManager.Instance.LoadGame();
         SceneManager.LoadScene("GameScene");
     }
 
@@ -28,20 +33,28 @@ public class MainMenu : MonoBehaviour
     public void PlayOnEasy()
     {
         GameEvents.RaiseDifficultySelected(0);
+        DataPersistenceManager.Instance.CreateAndStartNewGame();
         SceneManager.LoadScene("GameScene");
+        Debug.Log(GameEvents.SavedDifficulty);
     }
 
     // Start the game on normal and send the difficulty selection to the Game Manager
     public void PlayOnNormal()
     {
         GameEvents.RaiseDifficultySelected(1);
+        DataPersistenceManager.Instance.CreateAndStartNewGame();
         SceneManager.LoadScene("GameScene");
+        Debug.Log(GameEvents.SavedDifficulty);
+
     }
 
     // Start the game on hard and send the difficulty selection to the Game Manager
     public void PlayOnHard()
     {
         GameEvents.RaiseDifficultySelected(2);
+        DataPersistenceManager.Instance.CreateAndStartNewGame();
         SceneManager.LoadScene("GameScene");
+        Debug.Log(GameEvents.SavedDifficulty);
+
     }
 }

@@ -5,6 +5,7 @@ Code inspired by and sourced by Night Run Studio https://www.youtube.com/playlis
 [CreateAssetMenu(fileName = "New Item")]
 public class ItemSO : ScriptableObject
 {
+    public string itemID;
     public string itemName;
     public string itemDescription;
     public Sprite icon;

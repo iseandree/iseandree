@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74680dcea2f614288b1c22310c17fc, type: 3}
   m_Name: Food
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemID: food
   itemName: Food
   itemDescription: 'Food '
   icon: {fileID: 3625043607559282579, guid: 324143641a9eb9f44b18ec57ea3b05ea, type: 3}
   stackSize: 40
+  isAura: 0

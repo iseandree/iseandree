@@ -16,7 +16,7 @@ public class GameData
     // Variables - Game Mechanic related
     public SerializableDictionary<string, bool> checkPointsCrossed;
     public SerializableDictionary<string, bool> itemsCollected;
-    public InventorySlot slot;
+    public List<InventorySlotData> inventorySlots; 
     public float auraScale;
  
     public GameData()
@@ -27,11 +27,14 @@ public class GameData
         playerPosition = Vector3.zero;
         checkPointsCrossed = new SerializableDictionary<string, bool>();
         itemsCollected = new SerializableDictionary<string, bool>();
-        this.slot = new InventorySlot
-        {
-            itemSO = null,
-            quantity = 0
-        };
+        this.inventorySlots = new List<InventorySlotData>();
         this.auraScale = 0;
     }
+}
+
+[System.Serializable]
+public class InventorySlotData
+{
+    public string itemID;
+    public int quantity;
 }

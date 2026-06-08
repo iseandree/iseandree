@@ -145,7 +145,7 @@ MonoBehaviour:
   interactAnim: {fileID: 6978897375041557625}
   aura: {fileID: 3786570581565924288}
   interactIcon: {fileID: 4297604676703331971}
-  circleCastRadius: 0.75
+  circleCastRadius: 5
   hasObjective: 0
   hasReasonToTalk: 1
   currentConversation: {fileID: 0}

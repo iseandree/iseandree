@@ -52,12 +52,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DifficultySelect(GameEvents.SavedDifficulty);
         isGameRunning = true;
-        currentTimeStampIndex = -1;
+        isPaused = false;
         CycleTimeStamps();
         playerInput = FindFirstObjectByType<PlayerController2D>().GetComponent<PlayerInput>();
-        Debug.Log(difficultySelected);
     }
 
     // Awake is called when the script instance is being loaded
@@ -181,6 +179,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     // Using the player input, Pause the game and show the menu
     public void PauseGame()
     {
+        isPaused = true;
         SwitchToUIMap();
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
@@ -195,23 +194,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
         SwitchToPlayerMap();
     }
 
-    // Save the Game per character choice
-    public void SaveGame()
-    {
-        DataPersistenceManager.Instance.SaveGame();
-    }
-
     // Wait to Quit after a second or so, so that the game can save
     private IEnumerator QuitGameOnTimer()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSecondsRealtime(1);
         Application.Quit();
     }
 
     // Can't trigger QuitGameOnTimer on button so this is a buffer method really
     public void QuitGame()
     {
-        QuitGameOnTimer();
+        StartCoroutine(QuitGameOnTimer());
     }
 
     // When the player is done using the UI system switch back to regular player input
@@ -254,9 +247,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.difficultySelected = data.gameDifficulty;
+        DifficultySelect((int)this.difficultySelected);
         this.currentTimeStampIndex = data.currentTimeStampIndex;
         this.currentCycleTime = data.currentCycleTime;
-        Debug.Log("Difficulty Loaded: " + difficultySelected +
+        Debug.Log("Difficulty Loaded: " + (int)difficultySelected +
             " Current Time Stamp Index: " + currentTimeStampIndex + " Current Time Elapsed: " + currentCycleTime);
     }
 }

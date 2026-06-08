@@ -23,6 +23,7 @@ public class CheckPoints : MonoBehaviour, IDataPersistence
         {
             isCrossed = true;
             DataPersistenceManager.Instance.SaveGame();
+            gameObject.SetActive(false);
         }
     }
 

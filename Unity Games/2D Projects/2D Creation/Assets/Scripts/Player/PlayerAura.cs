@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAura : MonoBehaviour, IDataPersistence
 {
-    private float scaleIncrease;
+    private float scaleIncrease = 0.0f;
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class PlayerAura : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.auraScale = scaleIncrease;
+        data.auraScale = this.scaleIncrease;
     }
 
     public void LoadData(GameData data)

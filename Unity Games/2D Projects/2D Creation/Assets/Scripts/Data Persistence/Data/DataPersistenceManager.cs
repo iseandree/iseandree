@@ -21,17 +21,6 @@ public class DataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
 
-    // Initializes the singleton instance of the component if it has not already been set.
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     // Subscribe to OnSceneLoaded
     private void OnEnable()
     {
@@ -44,13 +33,23 @@ public class DataPersistenceManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    // Initializes the singleton instance of the component if it has not already been set.
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     // Initializes the data persistence system and loads the game state.
     private void Start()
     {
         // Give the OS standard directory for persisting data for a Unity Project
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
     }
 
     // Finds all active components in the scene that implement the IDataPersistence interface and are derived from MonoBehaviour.
@@ -67,6 +66,22 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+    }
+
+    // Create a fresh GameData instance, write this blank data to the disk over the old save and
+    // push this brand-new empty data to any active scripts in the scene
+    public void CreateAndStartNewGame()
+    {
+        NewGame();
+        PushDataToObjects();
+    }
+
+    public void RestartGame()
+    {
+        int preservedDifficulty = (int)gameData.gameDifficulty;
+        NewGame();
+        gameData.gameDifficulty = (GameManager.DifficultySettings)preservedDifficulty;
+        PushDataToObjects();
     }
 
     /* Loads the game state from persistent storage and updates all registered data persistence objects with the loaded
@@ -92,21 +107,22 @@ public class DataPersistenceManager : MonoBehaviour
     // Saves the current game state by persisting all relevant data using registered data persistence objects and the
     public void SaveGame()
     {
+        // If gameData is null for any reason, prevent the crash
+        if (this.gameData == null)
+        {
+            NewGame();
+        }
+
         // Pass the data to other scripts so they can update it
         foreach (IDataPersistence dataPersistenceObject in dataPersistenceObjects)
         {
             dataPersistenceObject.SaveData(ref gameData);
         }
 
+        Debug.Log(gameData.gameDifficulty);
+
         // Save that data to a file using the data Handler
         dataHandler.Save(gameData);
-    }
-
-    // When a scene is loaded find all the data persistence objects and push relevant data to them
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        PushDataToObjects();
     }
 
     // If there is a save file push the stored data to all objects that had their data stored
@@ -120,9 +136,16 @@ public class DataPersistenceManager : MonoBehaviour
         }
     }
 
+    // When a scene is loaded find all the data persistence objects and push relevant data to them
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        PushDataToObjects();
+    }
+
     // Return whether or not there is a save file
     public bool HasGameData()
     {
-        return this.gameData != null;
+        return dataHandler.Load() != null;
     }
 }

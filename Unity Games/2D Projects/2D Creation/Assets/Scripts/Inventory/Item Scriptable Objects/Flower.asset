@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74680dcea2f614288b1c22310c17fc, type: 3}
   m_Name: Flower
   m_EditorClassIdentifier: Assembly-CSharp::ItemScriptableObject
+  itemID: flower
   itemName: Flower
   itemDescription: pretty shi
   icon: {fileID: -2135585597343286014, guid: 6a93a58181650c44fb0e43439a82c568, type: 3}
   stackSize: 40
+  isAura: 0

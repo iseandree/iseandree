@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -96,9 +97,9 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
             {
                 pickupItem.Collect();
                 animator.SetTrigger("PickupTrigger");
+                StartCoroutine(DisableInputDuringAnimation());
             }
         }
-
         // Pause the game
         if(pauseAction.WasPressedThisFrame())
         {
@@ -123,6 +124,16 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpRequest = false;
         }
+    }
+
+    private IEnumerator DisableInputDuringAnimation()
+    {
+        yield return null;
+        playerInput.DeactivateInput();
+        // Get the duration of the current animation clip Safely
+        float duration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(duration);
+        playerInput.ActivateInput();
     }
 
     // Check if the player is Grounded and draw the line so I can see it in the scene
