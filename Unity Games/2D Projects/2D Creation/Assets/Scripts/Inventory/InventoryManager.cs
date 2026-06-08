@@ -195,11 +195,13 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             { 
                 continue;
             }
+
             InventorySlotData slotData = new InventorySlotData
             {
                 itemID = slot.itemSO.itemID,
                 quantity = slot.quantity
             };
+
             data.inventorySlots.Add(slotData);
         }
     }

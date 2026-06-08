@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     private void Update()
     {
-        if (!isGameRunning)
+        if (!isGameRunning || isPaused)
         {
             return;
         }

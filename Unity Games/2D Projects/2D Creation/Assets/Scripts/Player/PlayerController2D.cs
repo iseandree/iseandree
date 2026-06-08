@@ -90,7 +90,7 @@ public class PlayerController2D : MonoBehaviour, IDataPersistence
         ActivateJump();
 
         // Check if the player is near a collectible object
-        if (DetectInteractable() && interactAction.WasPressedThisFrame())
+        if (DetectInteractable() && interactAction.WasPressedThisFrame() && isGrounded)
         {
             Items pickupItem = interactable.GetComponent<Items>();
             if(pickupItem != null)
